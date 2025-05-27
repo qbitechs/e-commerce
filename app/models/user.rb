@@ -7,5 +7,5 @@ class User < ApplicationRecord
   enum :role, {
     customer: "customer",
     admin: "admin"
-  }, default: :admin
+  }, default: :customer
 end
