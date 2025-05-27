@@ -1,0 +1,38 @@
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :shipping_address %><br>
+    <%= form.text_area :shipping_address %>
+  </div>
+
+  <div>
+    <%= form.label :payment_method %><br>
+    <%= form.select :payment_method, ['COD', 'Credit Card', 'PayPal'], prompt: "Select payment method" %>
+  </div>
+
+  <div>
+    <%= form.label :total %><br>
+    <%= form.number_field :total, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :status %><br>
+    <%= form.select :status, Order.statuses.keys.map { |s| [s.titleize, s] } %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+

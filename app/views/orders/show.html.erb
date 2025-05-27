@@ -1,0 +1,22 @@
+<h1>Order #<%= @order.id %></h1>
+
+<p><strong>Status:</strong> <%= @order.status %></p>
+<p><strong>Total:</strong> <%= number_to_currency(@order.total) %></p>
+<p><strong>Payment Method:</strong> <%= @order.payment_method %></p>
+<p><strong>Shipping Address:</strong> <%= @order.shipping_address %></p>
+
+<h2>Order Items</h2>
+<% if @order.order_items.any? %>
+  <ul>
+    <% @order.order_items.each do |item| %>
+      <li>
+        <%= item.product.name %> - Quantity: <%= item.quantity %>, Unit Price: <%= number_to_currency(item.unit_price) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No items in this order.</p>
+<% end %>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

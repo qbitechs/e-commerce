@@ -1,0 +1,30 @@
+<h1>My Orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Payment Method</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.status %></td>
+        <td><%= number_to_currency(order.total) %></td>
+        <td><%= order.payment_method %></td>
+        <td>
+          <%= link_to 'Show', order_path(order) %> |
+          <%= link_to 'Edit', edit_order_path(order) %> |
+          <%= link_to 'Delete', order_path(order), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Order', new_order_path %>
