@@ -1,0 +1,9 @@
+<%= form_with model: [:admin, @product], local: true do |form| %>
+  <div><%= form.label :name %>    <%= form.text_field :name %></div>
+  <div><%= form.label :description %> <%= form.text_area :description %></div>
+  <div><%= form.label :price %>   <%= form.number_field :price, step: 0.01 %></div>
+  <div><%= form.label :stock %>   <%= form.number_field :stock %></div>
+  <div><%= form.label :sku %>     <%= form.text_field :sku %></div>
+  <div><%= form.label :image %>   <%= form.file_field :image, direct_upload: true %></div>
+  <div><%= form.submit %></div>
+<% end %>
