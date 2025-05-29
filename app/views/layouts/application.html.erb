@@ -22,9 +22,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main>
+  <body class="flex min-h-screen flex-col">
+    <%= render 'layouts/header' %>
+    <main class="flex-1">
       <%= yield %>
     </main>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

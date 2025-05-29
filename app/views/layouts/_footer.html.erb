@@ -1,0 +1,51 @@
+<%# app/views/layouts/_footer.html.erb %>
+<footer class="bg-[#232f3e] text-white mt-auto">
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <%# Column 1 %>
+      <div>
+        <h3 class="font-bold text-lg mb-4">Get to Know Us</h3>
+        <ul class="space-y-2">
+          <li><%= link_to "About Us", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Careers", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Press Releases", "#", class: "hover:text-yellow-300" %></li>
+        </ul>
+      </div>
+
+      <%# Column 2 %>
+      <div>
+        <h3 class="font-bold text-lg mb-4">Connect with Us</h3>
+        <ul class="space-y-2">
+          <li><%= link_to "Facebook", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Twitter", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Instagram", "#", class: "hover:text-yellow-300" %></li>
+        </ul>
+      </div>
+
+      <%# Column 3 %>
+      <div>
+        <h3 class="font-bold text-lg mb-4">Make Money with Us</h3>
+        <ul class="space-y-2">
+          <li><%= link_to "Sell on ShopRails", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Become an Affiliate", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Advertise Your Products", "#", class: "hover:text-yellow-300" %></li>
+        </ul>
+      </div>
+
+      <%# Column 4 %>
+      <div>
+        <h3 class="font-bold text-lg mb-4">Let Us Help You</h3>
+        <ul class="space-y-2">
+          <li><%= link_to "Your Account", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Returns Centre", "#", class: "hover:text-yellow-300" %></li>
+          <li><%= link_to "Customer Service", "#", class: "hover:text-yellow-300" %></li>
+        </ul>
+      </div>
+    </div>
+
+    <%# Copyright %>
+    <div class="border-t border-gray-700 mt-8 pt-6 text-center">
+      <p>&copy; 2023 ShopRails.com, Inc. or its affiliates</p>
+    </div>
+  </div>
+</footer>
