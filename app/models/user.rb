@@ -11,8 +11,20 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :email,     presence: true, uniqueness: true
 
+  after_create :build_role_profile
+
   enum :role, {
     customer: "customer",
     admin: "admin"
   }, default: :customer
+
+  private
+
+  def build_role_profile
+    if admin?
+      create_admin!
+    else
+      create_customer!
+    end
+  end
 end
