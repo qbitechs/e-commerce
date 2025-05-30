@@ -3,6 +3,7 @@ class Admin::ProductsController < Admin::ApplicationController
 
   def index
     @products = Product.all
+    render "products/index"
   end
 
   def show; end
@@ -15,7 +16,7 @@ class Admin::ProductsController < Admin::ApplicationController
     @product = Product.new(product_params)
     if @product.save
       flash[:success] = "Product created successfully"
-      redirect_to admin_product_path(@product), notice: "Product created."
+      redirect_to admin_products_path, notice: "Product created."
     else
       render :new
     end
