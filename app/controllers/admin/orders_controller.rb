@@ -2,7 +2,7 @@ class Admin::OrdersController < Admin::ApplicationController
   before_action :set_order, only: %i[show update]
 
   def index
-    @orders = Order.all(created_at: :desc)
+    @orders = Order.all
   end
 
   def show; end
