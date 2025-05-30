@@ -4,9 +4,13 @@
   <div class="h-48 bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
     <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center shadow-inner">
       <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-        </svg>
+        <% if product.image.attached? %>
+          <%= image_tag product.image.variant(resize_to_limit: [600, 400]), alt: product.name, class: "rounded shadow-md mb-4" %>
+        <% else %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        <% end %>  
       </div>
     </div>
   </div>
@@ -14,7 +18,7 @@
   <div class="p-5">
     <div class="mb-1">
       <span class="text-xs font-medium text-indigo-600 uppercase tracking-wide">Electronics</span>
-      <h3 class="text-lg font-semibold text-gray-900 mt-1">Product</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mt-1"><%= product.name %></h3>
     </div>
     <!-- Rating -->
     <div class="flex items-center mb-2">
@@ -33,12 +37,12 @@
       <span class="text-xs text-gray-500 ml-1">(<%= "%.1f" % (rand(3.0..5.0)) %>)</span>
     </div>
     <p class="text-gray-600 text-sm mb-4">
-      High-quality product with premium features and excellent durability.
+      <%= product.description %>
     </p>
     <!-- Price -->
     <div class="flex items-baseline justify-between mb-4">
       <div>
-        <span class="text-xl font-bold text-gray-900">$<%= rand(49..199) %>.99</span>
+        <span class="text-xl font-bold text-gray-900">$<%= number_to_currency(product.price) %></span>
         <% if rand(1..3) == 1 %>
           <span class="text-sm text-gray-500 line-through ml-2">$<%= rand(79..249) %>.99</span>
         <% end %>

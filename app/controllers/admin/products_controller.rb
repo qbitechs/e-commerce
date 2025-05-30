@@ -14,6 +14,7 @@ class Admin::ProductsController < Admin::ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
+      flash[:success] = "Product created successfully"
       redirect_to admin_product_path(@product), notice: "Product created."
     else
       render :new
