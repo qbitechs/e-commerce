@@ -1,51 +1,122 @@
-<%# app/views/layouts/_footer.html.erb %>
-<footer class="bg-[#232f3e] text-white mt-auto">
-  <div class="max-w-7xl mx-auto px-4 py-10">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <%# Column 1 %>
+<footer class="bg-gradient-to-br from-indigo-900 to-purple-900 text-white mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <%# Column 1: Get to Know Us %>
       <div>
-        <h3 class="font-bold text-lg mb-4">Get to Know Us</h3>
-        <ul class="space-y-2">
-          <li><%= link_to "About Us", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Careers", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Press Releases", "#", class: "hover:text-yellow-300" %></li>
+        <div class="flex items-center mb-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center shadow-inner mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-xl bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent">Get to Know Us</h3>
+        </div>
+        <ul class="space-y-3">
+          <li><%= link_to "About Us", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Careers", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Press Releases", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "ShopRails Science", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
         </ul>
       </div>
 
-      <%# Column 2 %>
+      <%# Column 2: Connect with Us %>
       <div>
-        <h3 class="font-bold text-lg mb-4">Connect with Us</h3>
-        <ul class="space-y-2">
-          <li><%= link_to "Facebook", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Twitter", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Instagram", "#", class: "hover:text-yellow-300" %></li>
+        <div class="flex items-center mb-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center shadow-inner mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-xl bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent">Connect with Us</h3>
+        </div>
+        <ul class="space-y-3">
+          <li>
+            <%= link_to "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+              Facebook
+            <% end %>
+          </li>
+          <li>
+            <%= link_to "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-300" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+              </svg>
+              Twitter
+            <% end %>
+          </li>
+          <li>
+            <%= link_to "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-pink-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+              </svg>
+              Instagram
+            <% end %>
+          </li>
         </ul>
       </div>
 
-      <%# Column 3 %>
+      <%# Column 3: Make Money with Us %>
       <div>
-        <h3 class="font-bold text-lg mb-4">Make Money with Us</h3>
-        <ul class="space-y-2">
-          <li><%= link_to "Sell on ShopRails", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Become an Affiliate", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Advertise Your Products", "#", class: "hover:text-yellow-300" %></li>
+        <div class="flex items-center mb-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center shadow-inner mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-xl bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent">Make Money with Us</h3>
+        </div>
+        <ul class="space-y-3">
+          <li><%= link_to "Sell on ShopRails", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Become an Affiliate", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Advertise Your Products", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Fulfillment by ShopRails", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
         </ul>
       </div>
 
-      <%# Column 4 %>
+      <%# Column 4: Let Us Help You %>
       <div>
-        <h3 class="font-bold text-lg mb-4">Let Us Help You</h3>
-        <ul class="space-y-2">
-          <li><%= link_to "Your Account", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Returns Centre", "#", class: "hover:text-yellow-300" %></li>
-          <li><%= link_to "Customer Service", "#", class: "hover:text-yellow-300" %></li>
+        <div class="flex items-center mb-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center shadow-inner mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-xl bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent">Let Us Help You</h3>
+        </div>
+        <ul class="space-y-3">
+          <li><%= link_to "Your Account", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Returns Centre", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Customer Service", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
+          <li><%= link_to "Shipping Rates & Policies", "#", class: "flex items-center group hover:text-yellow-300 transition duration-200" %></li>
         </ul>
       </div>
     </div>
 
-    <%# Copyright %>
-    <div class="border-t border-gray-700 mt-8 pt-6 text-center">
-      <p>&copy; 2023 ShopRails.com, Inc. or its affiliates</p>
+    <%# Copyright and Legal %>
+    <div class="mt-10 pt-6 border-t border-indigo-700">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center justify-center mb-4 md:mb-0">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </div>
+          <span class="text-xl font-bold bg-gradient-to-r from-yellow-300 to-yellow-200 bg-clip-text text-transparent">ShopRails</span>
+        </div>
+        
+        <div class="text-center text-indigo-300 text-sm">
+          <p>&copy; <%= Time.now.year %> ShopRails.com, Inc. or its affiliates</p>
+        </div>
+        
+        <div class="flex space-x-4 mt-4 md:mt-0">
+          <%= link_to "Terms of Use", "#", class: "text-indigo-300 hover:text-yellow-300 text-sm transition duration-200" %>
+          <%= link_to "Privacy Policy", "#", class: "text-indigo-300 hover:text-yellow-300 text-sm transition duration-200" %>
+          <%= link_to "Cookies", "#", class: "text-indigo-300 hover:text-yellow-300 text-sm transition duration-200" %>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
