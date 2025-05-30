@@ -1,6 +1,122 @@
-<h1><%= @product.name %></h1>
-<p><%= @product.description %></p>
-<p>Price: <%= number_to_currency(@product.price) %></p>
-<% if @product.image.attached? %>
-  <%= image_tag @product.image.variant(resize_to_limit: [400, 400]) %>
-<% end %>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <%= render "shared/breadcrumbs" %>
+  <!-- Back to Products -->
+  <div class="mb-6">
+    <%= link_to products_path, class: "inline-flex items-center text-gray-600 hover:text-gray-900" do %>
+      <i class="fas fa-arrow-left mr-2"></i> Back to Products
+    <% end %>
+  </div>
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="flex flex-col md:flex-row">
+      <!-- Product Image -->
+      <div class="md:w-1/2 p-8 flex justify-center items-center bg-gray-50">
+        <div class="relative">
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image, class: "w-full h-96 md:h-[450px] object-contain rounded-xl" %>
+          <% else %>
+            <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96 md:h-[450px] flex items-center justify-center">
+              <i class="fas fa-camera text-gray-400 text-5xl"></i>
+            </div>
+          <% end %>
+          <div class="absolute bottom-4 right-4 bg-white rounded-full p-2 shadow-lg">
+            <i class="fas fa-expand text-gray-600"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Product Details -->
+      <div class="md:w-1/2 p-8">
+        <!-- Product Status -->
+        <div class="flex justify-between items-start">
+          <% if @product.stock > 0 %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              <i class="fas fa-check-circle mr-2"></i> In Stock
+            </span>
+          <% else %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+              <i class="fas fa-times-circle mr-2"></i> Out of Stock
+            </span>
+          <% end %>
+          <div class="flex">
+            <button class="p-2 rounded-full hover:bg-gray-100" title="Add to Wishlist">
+              <i class="far fa-heart text-gray-500 hover:text-red-500"></i>
+            </button>
+            <button class="p-2 rounded-full hover:bg-gray-100" title="Share">
+              <i class="fas fa-share-alt text-gray-500"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Product Name -->
+        <h1 class="text-3xl font-bold text-gray-900 mt-4"><%= @product.name %></h1>
+        <!-- SKU and Rating -->
+        <div class="flex items-center mt-2">
+          <div class="text-sm text-gray-500 mr-4">
+            SKU: <span class="font-medium"><%= @product.sku %></span>
+          </div>
+          <div class="flex items-center">
+            <div class="flex">
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star text-yellow-400"></i>
+              <i class="fas fa-star-half-alt text-yellow-400"></i>
+            </div>
+            <span class="ml-2 text-sm text-gray-500">(128 reviews)</span>
+          </div>
+        </div>
+        <!-- Price -->
+        <div class="mt-6">
+          <p class="text-4xl font-bold text-indigo-600"><%= number_to_currency(@product.price) %></p>
+        </div>
+        <!-- Stock and Availability -->
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm font-medium text-gray-500">Availability</p>
+            <p class="<%= @product.stock > 0 ? 'text-green-600' : 'text-red-600' %> font-medium">
+              <%= @product.stock > 0 ? "In Stock (#{pluralize(@product.stock, 'unit')})" : 'Out of Stock' %>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-500">Category</p>
+            <p class="text-gray-900 font-medium"><%= 'Uncategorized' %></p>
+          </div>
+        </div>
+        <!-- Quantity Selector -->
+        <div class="mt-6">
+          <p class="text-sm font-medium text-gray-900">Quantity</p>
+          <div class="flex mt-2">
+            <button type="button" class="bg-gray-100 text-gray-600 hover:bg-gray-200 h-11 w-10 rounded-l-lg flex items-center justify-center">
+              <i class="fas fa-minus text-xs"></i>
+            </button>
+            <input type="number" value="1" min="1" max="47" class="bg-gray-50 border-y border-gray-300 h-11 w-16 text-center text-base font-medium">
+            <button type="button" class="bg-gray-100 text-gray-600 hover:bg-gray-200 h-11 w-10 rounded-r-lg flex items-center justify-center">
+              <i class="fas fa-plus text-xs"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Action Buttons -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+          <button class="flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700">
+            <i class="fas fa-shopping-cart mr-3"></i> Add to Cart
+          </button>
+          <button class="flex-1 bg-white border border-gray-300 rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-gray-900 hover:bg-gray-50">
+            <i class="fas fa-bolt mr-3"></i> Buy Now
+          </button>
+        </div>
+        <!-- Meta Information -->
+        <div class="mt-6 text-sm text-gray-500">
+          <div class="flex space-x-4">
+            <p>Added: <span class="text-gray-900"><%= @product.created_at.strftime('%B %d, %Y') %></span></p>
+            <p>Updated: <span class="text-gray-900"><%= @product.updated_at.strftime('%B %d, %Y') %></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Product Description -->
+    <div class="border-t border-gray-200 px-8 py-8">
+      <h2 class="text-xl font-bold text-gray-900">Product Description</h2>
+      <div class="mt-4 prose max-w-none text-gray-500">
+        <%= simple_format(@product.description) %>
+      </div>
+    </div>
+  </div>
+</div>
