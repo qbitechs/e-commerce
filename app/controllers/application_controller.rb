@@ -7,12 +7,12 @@ class ApplicationController < ActionController::Base
   private
 
   def current_customer
-    return unless user_signed_in? && current_user.role == "customer"
+    return unless user_signed_in? && current_user.customer?
     current_user.customer
   end
 
   def current_admin
-    return unless user_signed_in? && current_user.role == "admin"
+    return unless user_signed_in? && current_user.admin?
     current_user.admin
   end
 
