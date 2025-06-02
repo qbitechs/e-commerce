@@ -1,24 +1,24 @@
 <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
-  <!-- Product Image with fixed aspect ratio -->
-  <div class="relative aspect-square bg-gradient-to-br from-blue-50 to-purple-50">
-    <% if product.image.attached? %>
-      <%= image_tag product.image.variant(resize_to_limit: [800, 600]), class: "w-full h-full object-contain", alt: product.name %>
-    <% else %>
-      <div class="absolute inset-0 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-indigo-600 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-        </svg>
-      </div>
-    <% end %>
-  </div>
-  
+  <%= link_to product_path(product) do %>
+    <!-- Product Image with fixed aspect ratio -->
+    <div class="relative aspect-square bg-gradient-to-br from-blue-50 to-purple-50">
+      <% if product.image.attached? %>
+        <%= image_tag product.image.variant(resize_to_limit: [800, 600]), class: "w-full h-full object-contain", alt: product.name %>
+      <% else %>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-indigo-600 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
   <!-- Product Info -->
   <div class="p-5 flex flex-col flex-grow">
     <div class="mb-1">
       <span class="text-xs font-medium text-indigo-600 uppercase tracking-wide">Electronics</span>
       <h3 class="text-lg font-semibold text-gray-900 mt-1"><%= product.name %></h3>
     </div>
-    
     <!-- Rating -->
     <div class="flex items-center mb-2">
       <div class="flex text-yellow-400">
@@ -35,14 +35,12 @@
       </div>
       <span class="text-xs text-gray-500 ml-1">(<%= "%.1f" % (rand(3.0..5.0)) %>)</span>
     </div>
-    
     <!-- Description with limited height -->
     <div class="mb-4 flex-grow">
       <p class="text-gray-600 text-sm line-clamp-3">
         <%= product.description %>
       </p>
     </div>
-    
     <!-- Price -->
     <div class="flex items-baseline justify-between mb-4">
       <div>
@@ -57,10 +55,7 @@
         </span>
       <% end %>
     </div>
-    
     <!-- Fixed Add to Cart button -->
-    <button class="mt-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg transition duration-200 font-medium text-sm">
-      Add to Cart
-    </button>
+    <%= link_to "Add to Cart", cart_items_path(product_id: product.id), data: { turbo_method: :post }, class: "mt-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg transition duration-200 font-medium text-sm text-center" %>
   </div>
 </div>
