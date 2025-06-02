@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :cart_items, only: [ :create, :update, :destroy ]
 
+  resource :cart, only: [ :show ], controller: "carts"
+
   resources :products, only: [ :index, :show ]
 
   resources :orders, only: [ :index, :show ]
