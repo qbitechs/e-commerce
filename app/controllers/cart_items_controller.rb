@@ -2,12 +2,14 @@ class CartItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_customer!
   before_action :set_cart
+  before_action :set_cart_items, only: %w[ update destroy ]
 
   def create
     product = Product.find(params[:product_id])
     # Either find an existing CartItem for this product, or build a new one
     cart_item = @cart.cart_items.find_or_initialize_by(product: product)
-    cart_item.quantity = (cart_item.quantity || 0) + (params[:quantity].to_i > 0 ? params[:quantity].to_i : 1)
+    cart_item.quantity = 1
+    #cart_item.quantity = (cart_item.quantity || 0) + (cart_item_params[:quantity].to_i > 0 ? cart_item_params[:quantity].to_i : 1)
 
     if cart_item.save
       flash[:success] = "#{product.name} was added to your cart."
@@ -19,13 +21,11 @@ class CartItemsController < ApplicationController
   end
 
   def update
-    cart_item = @cart.cart_items.find(params[:id])
-    if params[:quantity].to_i <= 0
-      cart_item.destroy
-      flash[:success] = "Item removed from cart."
+    if cart_item_params[:quantity].to_i <= 0
+      flash[:alert] = "Could not update must have one item."
       redirect_to cart_path
     else
-      if cart_item.update(quantity: params[:quantity])
+      if @cart_item.update(cart_item_params)
         flash[:success] = "Quantity updated."
         redirect_to cart_path
       else
@@ -37,13 +37,16 @@ class CartItemsController < ApplicationController
 
   # DELETE /cart_items/:id
   def destroy
-    cart_item = @cart.cart_items.find(params[:id])
-    cart_item.destroy
+    @cart_item.destroy
     flash[:success] = "Item removed from cart."
     redirect_to cart_path
   end
 
   private
+
+  def cart_item_params
+    params.require(:cart_item).permit(:id, :quantity)
+  end
 
   def ensure_customer!
     unless current_user.customer?
@@ -54,5 +57,9 @@ class CartItemsController < ApplicationController
 
   def set_cart
     @cart = current_customer&.cart
+  end
+
+  def set_cart_items
+    @cart_item = @cart.cart_items.find(params[:id])
   end
 end

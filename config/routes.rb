@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Carts:
   resource :cart, only: [ :show ] do
-    resources :cart_items, only: [ :create, :update, :destroy ]
+    resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
     post "checkout", on: :member
   end
 
