@@ -11,7 +11,8 @@ class CartsController < ApplicationController
 
   def checkout
     if @cart.cart_items.empty?
-      redirect_to cart_path, alert: "Your cart is empty."
+      flash[:alert] = "Your cart is empty."
+      redirect_to cart_path
       return
     end
 
@@ -45,16 +46,19 @@ class CartsController < ApplicationController
       @cart.clear!
     end
 
-    redirect_to order_path(order), notice: "Checkout successful! Your order ##{order.id} has been placed."
+    flash[:success] = "Checkout successful! Your order ##{order.id} has been placed."
+    redirect_to order_path(order)
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to cart_path, alert: "Checkout failed: #{e.message}"
+    flash[:alert] = "Checkout failed: #{e.message}"
+    redirect_to cart_path
   end
 
   private
 
   def ensure_customer!
     unless current_user.customer?
-      redirect_to root_path, alert: "Only customers can view a cart."
+      flash[:alert] = "Only customers can view a cart."
+      redirect_to root_path
     end
   end
 

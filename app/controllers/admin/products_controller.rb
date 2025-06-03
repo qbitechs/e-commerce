@@ -15,8 +15,8 @@ class Admin::ProductsController < Admin::ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      flash[:success] = "Product created successfully"
-      redirect_to admin_products_path, notice: "Product created."
+      flash[:success] = "Product created successfully."
+      redirect_to admin_products_path
     else
       render :new
     end
@@ -26,7 +26,8 @@ class Admin::ProductsController < Admin::ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to admin_product_path(@product), notice: "Product updated."
+      flash[:success] = "Product updated."
+      redirect_to admin_product_path(@product)
     else
       render :edit
     end
@@ -34,7 +35,8 @@ class Admin::ProductsController < Admin::ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to admin_products_path, notice: "Product deleted."
+    flash[:success] = "Product deleted."
+    redirect_to admin_products_path
   end
 
   private

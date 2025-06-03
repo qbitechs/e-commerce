@@ -10,9 +10,11 @@ class CartItemsController < ApplicationController
     cart_item.quantity = (cart_item.quantity || 0) + (params[:quantity].to_i > 0 ? params[:quantity].to_i : 1)
 
     if cart_item.save
-      redirect_to cart_path, notice: "#{product.name} was added to your cart."
+      flash[:success] = "#{product.name} was added to your cart."
+      redirect_to cart_path
     else
-      redirect_back fallback_location: product_path(product), alert: "Unable to add to cart."
+      flash[:alert] = "Unable to add to cart."
+      redirect_back fallback_location: product_path(product)
     end
   end
 
@@ -20,12 +22,15 @@ class CartItemsController < ApplicationController
     cart_item = @cart.cart_items.find(params[:id])
     if params[:quantity].to_i <= 0
       cart_item.destroy
-      redirect_to cart_path, notice: "Item removed from cart."
+      flash[:success] = "Item removed from cart."
+      redirect_to cart_path
     else
       if cart_item.update(quantity: params[:quantity])
-        redirect_to cart_path, notice: "Quantity updated."
+        flash[:success] = "Quantity updated."
+        redirect_to cart_path
       else
-        redirect_to cart_path, alert: "Could not update quantity."
+        flash[:alert] = "Could not update quantity."
+        redirect_to cart_path
       end
     end
   end
@@ -34,14 +39,16 @@ class CartItemsController < ApplicationController
   def destroy
     cart_item = @cart.cart_items.find(params[:id])
     cart_item.destroy
-    redirect_to cart_path, notice: "Item removed from cart."
+    flash[:success] = "Item removed from cart."
+    redirect_to cart_path
   end
 
   private
 
   def ensure_customer!
     unless current_user.customer?
-      redirect_to root_path, alert: "Only customers can shop."
+      flash[:alert] = "Only customers can shop."
+      redirect_to root_path
     end
   end
 

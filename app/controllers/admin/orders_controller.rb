@@ -9,7 +9,8 @@ class Admin::OrdersController < Admin::ApplicationController
 
   def update
     if @order.update(order_params)
-      redirect_to admin_order_path(@order), notice: "Order status updated."
+      flash[:success] = "Order status updated."
+      redirect_to admin_order_path(@order)
     else
       render :show
     end
