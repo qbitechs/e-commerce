@@ -31,9 +31,15 @@ class CartsController < ApplicationController
         )
       end
 
-      # 3. (Optional) Update inventory: subtract stock
-      #    You might do something like:
-      #    @cart.cart_items.each { |ci| ci.product.decrement!(:stock, ci.quantity) }
+      # decrement the inventory stock
+      @cart.cart_items.each do |cart_item|
+        product = cart_item.product
+        if product.stock >= cart_item.quantity
+          product.decrement!(:stock, cart_item.quantity)
+        else
+          raise ActiveRecord::Rollback, "Not enough stock for #{product.name}"
+        end
+      end
 
       # 4. Clear out the cart
       @cart.clear!
