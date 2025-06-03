@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  STATUSES = %w[cart pending paid shipped cancelled]
+  STATUSES = %w[pending paid shipped cancelled]
 
   belongs_to :customer
   has_many   :order_items, dependent: :destroy
