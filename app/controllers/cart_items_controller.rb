@@ -1,84 +1,51 @@
 class CartItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_customer!
+  before_action :set_cart
 
   def create
-    cart   = current_cart
     product = Product.find(params[:product_id])
+    # Either find an existing CartItem for this product, or build a new one
+    cart_item = @cart.cart_items.find_or_initialize_by(product: product)
+    cart_item.quantity = (cart_item.quantity || 0) + (params[:quantity].to_i > 0 ? params[:quantity].to_i : 1)
 
-    if product.stock < (params[:quantity].to_i.nonzero? || 1)
-      render json: { error: "Insufficient stock" }, status: :unprocessable_entity
-      return
-    end
-
-    item = cart.order_items.find_or_initialize_by(product: product)
-
-    item.quantity = (item.quantity || 0) + (params[:quantity].to_i.nonzero? || 1)
-    item.unit_price = product.price
-    if item.save
-      cart.calculate_total!
-      render json: { success: true, cart: cart_summary(cart) }, status: :ok
+    if cart_item.save
+      redirect_to cart_path, notice: "#{product.name} was added to your cart."
     else
-      render json: { error: item.errors.full_messages.join(", ") },
-             status: :unprocessable_entity
+      redirect_back fallback_location: product_path(product), alert: "Unable to add to cart."
     end
   end
 
   def update
-    cart_item = current_cart.order_items.find(params[:id])
-
-    if cart_item.nil?
-      head :not_found
-      return
-    end
-
-    # Validate stock again
-    if cart_item.product.stock < params[:quantity].to_i
-      render json: { error: "Insufficient stock" }, status: :unprocessable_entity
-      return
-    end
-
-    cart_item.quantity = params[:quantity].to_i
-    if cart_item.save
-      current_cart.calculate_total!
-      render json: { success: true, cart: cart_summary(current_cart) }, status: :ok
+    cart_item = @cart.cart_items.find(params[:id])
+    if params[:quantity].to_i <= 0
+      cart_item.destroy
+      redirect_to cart_path, notice: "Item removed from cart."
     else
-      render json: { error: cart_item.errors.full_messages.join(", ") },
-             status: :unprocessable_entity
+      if cart_item.update(quantity: params[:quantity])
+        redirect_to cart_path, notice: "Quantity updated."
+      else
+        redirect_to cart_path, alert: "Could not update quantity."
+      end
     end
   end
 
   # DELETE /cart_items/:id
   def destroy
-    cart_item = current_cart.order_items.find(params[:id])
-    cart_item.destroy!
-    current_cart.calculate_total!
-    render json: { success: true, cart: cart_summary(current_cart) }, status: :ok
+    cart_item = @cart.cart_items.find(params[:id])
+    cart_item.destroy
+    redirect_to cart_path, notice: "Item removed from cart."
   end
 
   private
-
-
-  def cart_summary(cart)
-    {
-      id: cart.id,
-      total: cart.total,
-      items: cart.order_items.includes(:product).map do |item|
-        {
-          id: item.id,
-          product_id: item.product_id,
-          name: item.product.name,
-          quantity: item.quantity,
-          unit_price: item.unit_price.to_f,
-          subtotal: (item.quantity * item.unit_price).to_f
-        }
-      end
-    }
-  end
 
   def ensure_customer!
     unless current_user.customer?
       redirect_to root_path, alert: "Only customers can shop."
     end
+  end
+
+  def set_cart
+    @cart = current_customer&.cart
   end
 end
