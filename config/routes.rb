@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   root to: "products#index"
 
-  resources :cart_items, only: [ :create, :update, :destroy ]
+  # Carts:
+  resource :cart, only: [ :show ] do
+    resources :cart_items, only: [ :create, :update, :destroy ]
+    post "checkout", on: :member
+  end
 
-  resource :cart, only: [ :show ], controller: "carts"
 
   resources :products, only: [ :index, :show ]
 
