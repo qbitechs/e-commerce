@@ -19,7 +19,7 @@ class CartsController < ApplicationController
     ActiveRecord::Base.transaction do
       # 1. Build a new Order for this customer
       order = current_user.customer.orders.create!(
-        status: "pending",            # or whatever default you want
+        status: "pending",
         total:  @cart.total_price
       )
 
@@ -32,7 +32,7 @@ class CartsController < ApplicationController
         )
       end
 
-      # decrement the inventory stock
+      # Decrement the inventory stock
       @cart.cart_items.each do |cart_item|
         product = cart_item.product
         if product.stock >= cart_item.quantity
@@ -47,7 +47,7 @@ class CartsController < ApplicationController
     end
 
     flash[:success] = "Checkout successful! Your order ##{order.id} has been placed."
-    redirect_to order_path(order)
+    redirect_to root_path
   rescue ActiveRecord::RecordInvalid => e
     flash[:alert] = "Checkout failed: #{e.message}"
     redirect_to cart_path
