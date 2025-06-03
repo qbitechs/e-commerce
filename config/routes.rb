@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :products, only: [ :index, :show ]
 
-  resources :orders, only: [ :index, :show ]
+  resources :orders, only: [ :index ]
 
   devise_for :users, path: "user", controllers: {
     registrations: "users/registrations",
@@ -23,6 +23,6 @@ Rails.application.routes.draw do
 
     resources :products
 
-    resources :orders, only: [ :index, :show, :update ]
+    resources :orders, only: [ :index ]
   end
 end
