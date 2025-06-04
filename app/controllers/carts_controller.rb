@@ -18,9 +18,11 @@ class CartsController < ApplicationController
 
     ActiveRecord::Base.transaction do
       # 1. Build a new Order for this customer
-      order = current_user.customer.orders.create!(
-        status: "pending",
-        total:  @cart.total_price
+      @order = current_customer.orders.create!(
+        order_params.merge(
+          status: "pending",
+          total:  @cart.total_price
+        )
       )
 
       # 2. Convert each CartItem into an OrderItem
@@ -64,5 +66,9 @@ class CartsController < ApplicationController
 
   def set_cart
     @cart = current_customer.cart
+  end
+
+  def order_params
+    params.require(:order).permit(:recipient_first_name, :recipient_last_name, :recipient_phone, :shipping_address, :shipping_city, :shipping_country, :shipping_zip_code)
   end
 end
