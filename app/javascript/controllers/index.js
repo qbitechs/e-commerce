@@ -6,6 +6,9 @@ eagerLoadControllersFrom("controllers", application)
 import CartController from "controllers/cart_controller"
 application.register("cart", CartController);
 
-import counter_controller from "controllers/counter_controller";
-application.register("counter", counter_controller);
+import CounterController from "controllers/counter_controller";
+application.register("counter", CounterController);
+
+import FlashController from "controllers/flash_controller";
+application.register("flash", FlashController);
 
