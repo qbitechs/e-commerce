@@ -50,14 +50,14 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-6">
           <div class="flex items-center mb-4 sm:mb-0">
             <p class="text-sm font-medium text-gray-900 mr-4">Quantity</p>
-            <div class="flex">
-              <button class="bg-gray-100 text-gray-600 hover:bg-gray-200 h-9 w-9 rounded-l-lg flex items-center justify-center">
+            <div class="flex" data-controller="counter">
+              <button class="bg-gray-100 text-gray-600 hover:bg-gray-200 h-9 w-9 rounded-l-lg flex items-center justify-center" data-action="click->counter#decrement">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                 </svg>
               </button>
-              <%= f.number_field :quantity, min: 1, class: "bg-gray-50 border-y border-gray-300 h-9 w-12 text-center text-base font-medium" %>
-              <button class="bg-gray-100 text-gray-600 hover:bg-gray-200 h-9 w-9 rounded-r-lg flex items-center justify-center">
+              <%= f.number_field :quantity, min: 1, class: "bg-gray-50 border-y border-gray-300 h-9 w-12 text-center text-base font-medium", data: { counter_target: "count" } %>
+              <button class="bg-gray-100 text-gray-600 hover:bg-gray-200 h-9 w-9 rounded-r-lg flex items-center justify-center" data-action="click->counter#increment">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
