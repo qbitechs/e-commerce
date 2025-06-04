@@ -1,10 +1,44 @@
-<h1>Your Orders</h1>
-<ul>
-  <% @orders.each do |order| %>
-    <li>
-      <h2><%= link_to "Order ##{order.id}", order_path(order) %></h2>
-      <p>Status: <%= order.status %></p>
-      <p>Total: <%= number_to_currency(order.total) %></p>
-    </li>
-  <% end %>
-</ul>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Status Filters -->
+  <div class="flex flex-wrap gap-2 mb-6">
+    <button class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">All Orders</button>
+    <button class="px-4 py-2 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">Pending</button>
+    <button class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Processing</button>
+    <button class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">Shipped</button>
+    <button class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">Cancelled</button>
+    <button class="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Completed</button>
+  </div>
+  <!-- Orders Table -->
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <!-- Table Header -->
+      <thead class="bg-gray-100">
+        <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th class="px-6 py-3 text-left">Order ID</th>
+          <th class="px-6 py-3 text-left">Customer</th>
+          <th class="px-6 py-3 text-left">Shipping</th>
+          <th class="px-6 py-3 text-left">Status</th>
+          <th class="px-6 py-3 text-left">Date</th>
+          <th class="px-6 py-3 text-right">Total</th>
+        </tr>
+      </thead>
+      <!-- Table Body -->
+      <% @orders.each do |order| %>
+        <%= render "orders/table", order: order %>
+      <% end %>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <div class="mt-8 flex items-center justify-between">
+    <div class="text-sm text-gray-700">
+      Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">24</span> orders
+    </div>
+    <div class="flex space-x-2">
+      <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Previous</button>
+      <button class="px-4 py-2 bg-blue-600 text-white rounded">1</button>
+      <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">2</button>
+      <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">3</button>
+      <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Next</button>
+    </div>
+  </div>
+</div>

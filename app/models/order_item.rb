@@ -6,6 +6,10 @@ class OrderItem < ApplicationRecord
 
   validates :quantity, :unit_price, numericality: { greater_than: 0 }
 
+  def total
+    unit_price * quantity
+  end
+
   private
 
   def set_unit_price

@@ -1,0 +1,61 @@
+<tbody class="divide-y divide-gray-200">
+  <!-- Order Row -->
+  <tr class="cursor-pointer">
+    <td class="px-6 py-4 font-medium text-blue-600">#ORD-<%= order.id %></td>
+    <td class="px-6 py-4">
+      <div class="font-medium"><%= order.recipient_first_name + " " + order.recipient_last_name %></div>
+      <div class="text-sm text-gray-500">Id: <%= order.customer.id %></div>
+    </td>
+    <td class="px-6 py-4">
+      <div><%= order.shipping_address %></div>
+      <div class="text-sm text-gray-500"><%= "#{order.shipping_city}, #{order.shipping_country}, #{order.shipping_zip_code}" %></div>
+    </td>
+    <td class="px-6 py-4">
+      <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+        <%= order.status %>
+      </span>
+    </td>
+    <td class="px-6 py-4">
+      <div><%= order.created_at.strftime("%b %e, %Y") %></div>
+      <div class="text-sm text-gray-500"><%= order.created_at.strftime("%-l:%M %p") %></div>
+    </td>
+    <td class="px-6 py-4 text-right">
+      <div class="font-bold text-lg"><%= number_to_currency(order.total) %></div>
+      <div class="text-sm text-gray-500"><%= order.order_items.count %> items</div>
+    </td>
+  </tr>
+  <!-- Expanded Order Items Row (hidden by default) -->
+  <tr class="bg-gray-50 hidden">
+    <td colspan="6" class="px-6 py-4">
+      <!-- Order Items Header -->
+      <div class="text-sm font-medium text-gray-700 mb-3">Order Items</div>
+      <!--Order Items -->
+      <% order.order_items.each do |item| %>
+        <%= render "orders/item", item: item %>
+      <% end %>
+      <!-- Order Summary -->
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <div class="flex justify-end">
+          <div class="text-right">
+            <div class="mb-1">
+              <span class="text-gray-600">Subtotal:</span>
+              <span class="font-medium">$245.99</span>
+            </div>
+            <div class="mb-1">
+              <span class="text-gray-600">Shipping:</span>
+              <span class="font-medium">$0.00</span>
+            </div>
+            <div class="mb-1">
+              <span class="text-gray-600">Tax:</span>
+              <span class="font-medium">$19.68</span>
+            </div>
+            <div class="text-lg mt-2">
+              <span class="text-gray-800">Total:</span>
+              <span class="font-bold">$265.67</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+</tbody>
