@@ -30,24 +30,5 @@
     </div>
   </div>
   <!-- Checkout Form -->
-  <%= render "cart/checkout_form" %>
-  <!-- Payment Method -->
-  <div class="mt-6 space-y-4">
-    <h3 class="text-lg font-medium text-gray-900">Payment Method</h3>
-    <div class="space-y-3">
-      <label class="flex items-center">
-        <input type="radio" name="payment" value="card" class="text-primary focus:ring-primary" checked>
-        <span class="ml-2 text-gray-700">Cash On Delivery</span>
-      </label>
-    </div>
-  </div>
-  <!-- Checkout Buttons -->
-  <div class="mt-8 space-y-3">
-    <button class="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold bg-indigo-700 hover:bg-indigo-500 transition-colors">
-      Complete Order
-    </button>
-    <button class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-colors">
-      Continue Shopping
-    </button>
-  </div>
+  <%= render "carts/checkout_form" %>
 </div>

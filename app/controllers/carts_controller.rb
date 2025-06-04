@@ -27,7 +27,7 @@ class CartsController < ApplicationController
 
       # 2. Convert each CartItem into an OrderItem
       @cart.cart_items.each do |ci|
-        order.order_items.create!(
+        @order.order_items.create!(
           product_id:  ci.product_id,
           quantity:    ci.quantity,
           unit_price:  ci.product.price
@@ -48,7 +48,7 @@ class CartsController < ApplicationController
       @cart.clear!
     end
 
-    flash[:success] = "Checkout successful! Your order ##{order.id} has been placed."
+    flash[:success] = "Checkout successful! Your order ##{@order.id} has been placed."
     redirect_to root_path
   rescue ActiveRecord::RecordInvalid => e
     flash[:alert] = "Checkout failed: #{e.message}"
