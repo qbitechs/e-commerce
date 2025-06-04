@@ -87,6 +87,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_03_095437) do
 
   create_table "orders", force: :cascade do |t|
     t.bigint "customer_id", null: false
+    t.string "recipient_first_name", null: false
+    t.string "recipient_last_name", null: false
+    t.string "recipient_phone", null: false
+    t.string "shipping_address", null: false
+    t.string "shipping_city", null: false
+    t.string "shipping_country", null: false
+    t.string "shipping_zip_code", null: false
     t.string "status"
     t.decimal "total"
     t.datetime "created_at", null: false
