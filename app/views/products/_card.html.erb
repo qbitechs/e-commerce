@@ -46,7 +46,7 @@
       <div>
         <span class="text-xl font-bold text-gray-900"><%= number_to_currency(product.price) %></span>
         <% if rand(1..3) == 1 %>
-          <span class="text-sm text-gray-500 line-through ml-2">$<%= rand(79..249) %>.99</span>
+          <span class="text-sm text-gray-500 line-through ml-2"><%= number_to_currency(product.price + 20) %></span>
         <% end %>
       </div>
       <% if rand(1..3) == 1 %>

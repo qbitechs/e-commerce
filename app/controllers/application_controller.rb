@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   include Pagy::Backend
 
-  helper_method :current_customer, :current_admin
+  helper_method :current_customer, :current_admin, :current_cart
 
   private
 
@@ -16,5 +16,9 @@ class ApplicationController < ActionController::Base
   def current_admin
     return unless user_signed_in? && current_user.admin?
     current_user.admin
+  end
+
+  def current_cart
+    current_customer&.cart
   end
 end
