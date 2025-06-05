@@ -1,7 +1,7 @@
 # app/controllers/carts_controller.rb
 class CartsController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_customer!
+  before_action :authenticate_customer!
   before_action :set_cart
 
   def show
@@ -34,13 +34,6 @@ class CartsController < ApplicationController
   end
 
   private
-
-  def ensure_customer!
-    unless current_user.customer?
-      flash[:alert] = "Only customers can view a cart."
-      redirect_to root_path
-    end
-  end
 
   def set_cart
     @cart = current_customer.cart
@@ -80,7 +73,6 @@ class CartsController < ApplicationController
       end
     end
   end
-
 
   def order_params
     params.require(:order).permit(:recipient_first_name, :recipient_last_name, :recipient_phone, :shipping_address, :shipping_city, :shipping_country, :shipping_zip_code)
