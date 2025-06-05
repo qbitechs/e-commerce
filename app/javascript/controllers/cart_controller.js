@@ -8,8 +8,6 @@ export default class extends Controller {
         
     event.target.classList.add("opacity-50", "cursor-not-allowed")
     event.target.classList.remove("hover:from-indigo-700", "hover:to-purple-700")
-
-    this.disableButton(event.currentTarget);
     
     const countElement = document.getElementById("count");
     const count = Number(countElement.textContent) || 0;
