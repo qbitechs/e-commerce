@@ -12,3 +12,5 @@ application.register("counter", CounterController);
 import FlashController from "controllers/flash_controller";
 application.register("flash", FlashController);
 
+import OrderRowController from "controllers/order_row_controller";
+application.register("order_row", OrderRowController);
