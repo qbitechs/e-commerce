@@ -2,7 +2,7 @@ class Admin::ProductsController < Admin::ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
-    @products = Product.all
+    @pagy, @products = pagy(Product.all)
     render "products/index"
   end
 
