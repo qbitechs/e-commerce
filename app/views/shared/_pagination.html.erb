@@ -34,11 +34,9 @@
           <%= link_to item, pagy_url_for(pagy, item), class: "relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-indigo-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 transform hover:scale-105", title: "Go to page #{item}", "aria-label": "Go to page #{item}" %>
         <% end %>
       <% when String %>
-        <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"/>
-          </svg>
-        </span>
+          <span class="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-indigo-600 border border-indigo-600 cursor-default shadow-sm">
+            <%= item %>
+          </span>
       <% end %>
     <% end %>
     <!-- Next Button -->
