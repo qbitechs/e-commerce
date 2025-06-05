@@ -5,10 +5,10 @@ class CartItemsController < ApplicationController
   before_action :set_cart_items, only: %w[ update destroy ]
 
   def create
-    product = Product.find(cart_item_params[:product_id])
+    product = Product.find(params[:product_id])
     # Either find an existing CartItem for this product, or build a new one
     cart_item = @cart.cart_items.find_or_initialize_by(product: product)
-    cart_item.quantity = cart_item_params[:quantity].to_i > 0 ? cart_item_params[:quantity].to_i : 1
+    cart_item.quantity = params[:quantity].to_i > 0 ? params[:quantity].to_i : 1
 
     if cart_item.quantity > product.stock
       flash[:alert] = "Only #{product.stock} items available."
