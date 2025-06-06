@@ -1,0 +1,80 @@
+<%= form_with model: [:admin, @product], local: true, class: "bg-white shadow rounded-lg p-6", data: { turbo: false } do |form| %>
+  <%= render "shared/error_messages", resource: @product %>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <!-- Left Column -->
+    <div class="space-y-6">
+      <div class="space-y-2">
+        <%= form.label :name, "Product Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent", placeholder: "Enter product name" %>
+      </div>
+      <div class="space-y-2">
+        <%= form.label :description, "Description", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_area :description, rows: 5, class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent", placeholder: "Enter product description" %>
+      </div>
+    </div>
+    <!-- Right Column -->
+    <div class="space-y-6">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <%= form.label :price, "Price", class: "block text-sm font-medium text-gray-700" %>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-gray-500 sm:text-sm">$</span>
+            </div>
+            <%= form.number_field :price, step: 0.01, class: "pl-7 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent", placeholder: "0.00" %>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <%= form.label :stock, "Stock", class: "block text-sm font-medium text-gray-700" %>
+          <%= form.number_field :stock, class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent", placeholder: "Quantity" %>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <%= form.label :sku, "SKU", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :sku, class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent", placeholder: "Product SKU" %>
+      </div>
+      <div class="space-y-2">
+        <%= form.label :image, "Product Image", class: "block text-sm font-medium text-gray-700" %>
+        <% if @product.image.attached? %>
+          <div class="mb-3 flex items-center">
+            <%= image_tag @product.image, class: "h-16 w-16 object-cover rounded-md border" %>
+            <div class="ml-3">
+              <span class="text-sm text-gray-600">Current image</span>
+              <div class="mt-1">
+                <%= form.label :remove_image, class: "inline-flex items-center text-sm text-red-600" do %>
+                  <%= form.check_box :remove_image, class: "h-4 w-4 text-red-600 border-gray-300 rounded" %>
+                  <span class="ml-2">Remove image</span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="flex items-center justify-center w-full">
+          <label class="flex flex-col w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <p class="text-sm text-gray-500">
+                <span class="font-semibold">Click to upload</span> or drag and drop
+              </p>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            </div>
+            <%= form.file_field :image, direct_upload: true, class: "hidden" %>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pt-5 border-t border-gray-200">
+    <div class="flex justify-end">
+      <%= link_to "Cancel", admin_products_path, class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      <%= form.submit @product.persisted? ? "Update Product" : "Create Product", class: "ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  </div>
+<% end %>
+<% if @product.persisted? %>
+  <div class="mt-4 flex justify-end">
+    <%= link_to "Delete Product", admin_product_path(@product), data: { turbo_method: :delete, turbo_confirm: "Are you sure!" }, class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+  </div>
+<% end %>
