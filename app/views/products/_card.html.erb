@@ -56,10 +56,10 @@
       <% end %>
     </div>
 
-    <% if current_user.admin? %>
+    <% if current_user&.admin? %>
       <span class="mt-auto bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 px-4 rounded-lg transition duration-200 font-medium text-sm text-center opacity-50">Added</span>
     <% else %>
-      <% if current_customer.cart.cart_items.exists?(product_id: product.id) %>
+      <% if current_customer&.cart&.cart_items&.exists?(product_id: product.id) %>
         <span class="mt-auto bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 px-4 rounded-lg transition duration-200 font-medium text-sm text-center opacity-50">Added</span>
       <% else %>
         <%= link_to "Add to Cart", cart_items_path(product_id: product.id), data: { controller: "cart", action: "click->cart#increment", turbo_method: :post }, class: "mt-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-2.5 px-4 rounded-lg transition duration-200 font-medium text-sm text-center" %>
