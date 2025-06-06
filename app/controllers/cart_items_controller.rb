@@ -11,11 +11,11 @@ class CartItemsController < ApplicationController
 
     cart_item.quantity = (params[:quantity] || 1).to_i
 
-    return if check_stock_and_quantity(cart_item.quantity, @product, cart_items_path)
+    return if check_stock_and_quantity(cart_item.quantity, @product, root_path)
 
     if cart_item.save
       flash[:success] = "#{@product.name} was added to your cart."
-      redirect_to cart_items_path
+      redirect_to root_path
     else
       flash[:alert] = "Unable to add to cart."
       redirect_back fallback_location: product_path(@product)
