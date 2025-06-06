@@ -1,6 +1,6 @@
 <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
   <% if current_admin %>
-    <%= link_to "#", class: "relative group" do %>
+    <%= link_to edit_admin_product_path(product), class: "relative group" do %>
       <%= render partial: "products/card_image", locals: { product: product, admin: true } %>
     <% end %>
   <% elsif current_customer %>

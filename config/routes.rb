@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    root to: "dashboard#index"
+    # root to: "dashboard#index"
 
     resources :products
 

@@ -27,7 +27,7 @@ class Admin::ProductsController < Admin::ApplicationController
   def update
     if @product.update(product_params)
       flash[:success] = "Product updated."
-      redirect_to admin_product_path(@product)
+      redirect_to admin_products_path
     else
       render :edit
     end
