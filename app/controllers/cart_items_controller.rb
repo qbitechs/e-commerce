@@ -8,9 +8,10 @@ class CartItemsController < ApplicationController
   def create
     # Either find an existing CartItem for this product, or build a new one
     cart_item = @cart.cart_items.find_or_initialize_by(product: @product)
-    quantity = params[:quantity] || 1
 
-    return if check_stock_and_quantity(quantity, @product, cart_items_path)
+    cart_item.quantity = params[:quantity].to_i || 1
+
+    return if check_stock_and_quantity(cart_item.quantity, @product, cart_items_path)
 
     if cart_item.save
       flash[:success] = "#{@product.name} was added to your cart."
