@@ -9,7 +9,7 @@ class CartItemsController < ApplicationController
     # Either find an existing CartItem for this product, or build a new one
     cart_item = @cart.cart_items.find_or_initialize_by(product: @product)
 
-    cart_item.quantity = params[:quantity].to_i || 1
+    cart_item.quantity = (params[:quantity] || 1).to_i
 
     return if check_stock_and_quantity(cart_item.quantity, @product, cart_items_path)
 
