@@ -12,11 +12,13 @@ Rails.application.routes.draw do
 
   resources :orders, only: [ :index ]
 
-  devise_for :users, path: "user", controllers: {
-    registrations: "users/registrations",
-    sessions:      "users/sessions",
-    passwords:     "users/passwords"
-  }
+  devise_for :customers
+
+  # devise_for :users, path: "user", controllers: {
+  #   registrations: "users/registrations",
+  #   sessions:      "users/sessions",
+  #   passwords:     "users/passwords"
+  # }
 
   namespace :admin do
     # root to: "dashboard#index"
