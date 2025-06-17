@@ -50,7 +50,7 @@ class CartItemsController < ApplicationController
   end
 
   def ensure_customer!
-    unless current_user.customer?
+    unless current_customer
       flash[:alert] = "Only customers can shop."
       redirect_to root_path
     end
