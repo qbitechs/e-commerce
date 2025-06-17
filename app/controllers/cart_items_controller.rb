@@ -1,5 +1,4 @@
 class CartItemsController < ApplicationController
-  before_action :authenticate_user!
   before_action :authenticate_customer!
   before_action :set_product, only: %w[ create update ]
   before_action :set_cart
