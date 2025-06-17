@@ -21,9 +21,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "products#index"
 
-    get "login", to: "sessions#new"
-    post "login", to: "sessions#create"
-    delete "logout", to: "sessions#destroy"
+    resource :session
+    resources :passwords, param: :token
 
     resources :products
 
