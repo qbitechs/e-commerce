@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
   resources :orders, only: [ :index ]
 
-
   devise_for :customers, path: "customers", controllers: {
     registrations: "customers/registrations",
     sessions:      "customers/sessions",
