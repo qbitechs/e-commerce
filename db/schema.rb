@@ -121,12 +121,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.bigint "admin_users_id", null: false
+    t.bigint "admin_user_id", null: false
     t.string "ip_address"
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_users_id"], name: "index_sessions_on_admin_users_id"
+    t.index ["admin_user_id"], name: "index_sessions_on_admin_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -137,5 +137,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
-  add_foreign_key "sessions", "admin_users", column: "admin_users_id"
+  add_foreign_key "sessions", "admin_users"
 end
