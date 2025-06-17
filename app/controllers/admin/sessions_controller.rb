@@ -1,17 +1,14 @@
 class Admin::SessionsController < ApplicationController
-  skip_before_action :require_admin, only: [ :new, :create ]
-  layout "admin"
-
   def new
-    redirect_to admin_dashboard_path if admin_signed_in?
+    redirect_to admin_root_path if admin_signed_in?
   end
 
   def create
-    admin = AdminUser.find_by(email: params[:email])
+    admin = AdminUser.find_by(email_address: params[:email])
 
     if admin&.authenticate(params[:password])
       session[:admin_id] = admin.id
-      redirect_to admin_dashboard_path, notice: "Successfully logged in!"
+      redirect_to admin_root_path, notice: "Successfully logged in!"
     else
       flash.now[:alert] = "Invalid email or password"
       render :new, status: :unprocessable_entity
