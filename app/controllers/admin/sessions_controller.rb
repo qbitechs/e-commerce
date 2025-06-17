@@ -1,4 +1,4 @@
-class Admin::SessionsController < Admin::ApplicationController
+class Admin::SessionsController < ApplicationController
   skip_before_action :require_admin, only: [ :new, :create ]
   layout "admin"
 
