@@ -22,10 +22,10 @@
       </div>
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex space-x-8 ml-10">
-        <%= link_to "Home", root_path, class: nav_link_classes(root_path) %>
-        <% if customer_signed_in? %>
-          <%= link_to "Orders", orders_path, class: nav_link_classes(orders_path) %>
-        <% end %>
+          <%= link_to "Home", admin_user_signed_in? ? admin_root_path : root_path, class: nav_link_classes(root_path) %>
+          <% if admin_user_signed_in? || customer_signed_in? %>
+            <%= link_to "Orders", admin_user_signed_in? ? admin_orders_path : orders_path, class: nav_link_classes(orders_path) %>
+          <% end %>
       </nav>
       <!-- Search Bar -->
       <div class="hidden md:flex flex-1 max-w-md mx-8">
