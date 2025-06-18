@@ -10,12 +10,12 @@ class Admin::SessionsController < Admin::ApplicationController
       start_new_session_for user
       redirect_to after_authentication_url
     else
-      redirect_to new_session_path, alert: "Try another email address or password."
+      redirect_to new_admin_session_path, alert: "Try another email address or password."
     end
   end
 
   def destroy
     terminate_session
-    redirect_to new_session_path
+    redirect_to new_admin_session_path
   end
 end
