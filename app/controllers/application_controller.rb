@@ -9,10 +9,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def current_cart
-    current_customer&.cart
-  end
-
   def admin_user_signed_in?
     Current.admin_user.present?
   end

@@ -1,6 +1,6 @@
 # app/controllers/carts_controller.rb
 class CartsController < ApplicationController
-  before_action :authenticate_customer!
+  before_action :authenticate_customer!, only: %i[ checkout ]
   before_action :set_cart
 
   def show
