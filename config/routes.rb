@@ -12,14 +12,17 @@ Rails.application.routes.draw do
 
   resources :orders, only: [ :index ]
 
-  devise_for :users, path: "user", controllers: {
-    registrations: "users/registrations",
-    sessions:      "users/sessions",
-    passwords:     "users/passwords"
+  devise_for :customers, path: "customers", controllers: {
+    registrations: "customers/registrations",
+    sessions:      "customers/sessions",
+    passwords:     "customers/passwords"
   }
 
   namespace :admin do
-    # root to: "dashboard#index"
+    root to: "products#index"
+
+    resource :session
+    resources :passwords, param: :token
 
     resources :products
 
