@@ -1,10 +1,122 @@
-<h1>Your Orders</h1>
-<ul>
-  <% @orders.each do |order| %>
-    <li>
-      <h2><%= link_to "Order ##{order.id}", order_path(order) %></h2>
-      <p>Status: <%= order.status %></p>
-      <p>Total: <%= order.total %></p>
-    </li>
-  <% end %>
-</ul>
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Order Management</h1>
+      <p class="text-gray-600 mt-2">View and manage customer orders</p>
+    </div>
+  </div>
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Total Orders -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Total Orders</p>
+          <p class="text-2xl font-bold mt-1"><%= @total_orders %></p>
+        </div>
+        <div class="bg-blue-100 p-3 rounded-full">
+          <i class="fas fa-shopping-bag text-blue-600 text-xl"></i>
+        </div>
+      </div>
+      <div class="mt-4">
+        <% if defined?(@total_orders_change) %>
+          <% if @total_orders_change >= 0 %>
+            <span class="text-green-600 text-sm font-medium"><i class="fas fa-arrow-up mr-1"></i><%= number_to_percentage(@total_orders_change, precision: 1) %></span>
+          <% else %>
+            <span class="text-red-600 text-sm font-medium"><i class="fas fa-arrow-down mr-1"></i><%= number_to_percentage(@total_orders_change.abs, precision: 1) %></span>
+          <% end %>
+          <span class="text-gray-500 text-sm ml-2">from last month</span>
+        <% end %>
+      </div>
+    </div>
+    <!-- Pending Orders -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Pending Orders</p>
+          <p class="text-2xl font-bold mt-1"><%= @pending_orders %></p>
+        </div>
+        <div class="bg-yellow-100 p-3 rounded-full">
+          <i class="fas fa-clock text-yellow-600 text-xl"></i>
+        </div>
+      </div>
+      <%# Dynamic change if available %>
+      <div class="mt-4">
+        <% if defined?(@pending_orders_change) %>
+          <% if @pending_orders_change >= 0 %>
+            <span class="text-green-600 text-sm font-medium"><i class="fas fa-arrow-up mr-1"></i><%= number_to_percentage(@pending_orders_change, precision: 1) %></span>
+          <% else %>
+            <span class="text-red-600 text-sm font-medium"><i class="fas fa-arrow-down mr-1"></i><%= number_to_percentage(@pending_orders_change.abs, precision: 1) %></span>
+          <% end %>
+          <span class="text-gray-500 text-sm ml-2">from last month</span>
+        <% end %>
+      </div>
+    </div>
+    <!-- Completed Orders -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm">Completed Orders</p>
+          <p class="text-2xl font-bold mt-1"><%= @completed_orders %></p>
+        </div>
+        <div class="bg-green-100 p-3 rounded-full">
+          <i class="fas fa-check-circle text-green-600 text-xl"></i>
+        </div>
+      </div>
+      <div class="mt-4">
+        <% if defined?(@completed_orders_change) %>
+          <% if @completed_orders_change >= 0 %>
+            <span class="text-green-600 text-sm font-medium"><i class="fas fa-arrow-up mr-1"></i><%= number_to_percentage(@completed_orders_change, precision: 1) %></span>
+          <% else %>
+            <span class="text-red-600 text-sm font-medium"><i class="fas fa-arrow-down mr-1"></i><%= number_to_percentage(@completed_orders_change.abs, precision: 1) %></span>
+          <% end %>
+          <span class="text-gray-500 text-sm ml-2">from last month</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- Orders Table -->
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <!-- Table Header -->
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-gray-800">Recent Orders</h2>
+    </div>
+    <!-- Responsive Table Container -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <caption class="sr-only">Recent Orders</caption>
+        <!-- Table Columns Header -->
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Order & Customer
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+              Date
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+              Items
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+              Total
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+              Status
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+            </th>
+          </tr>
+        </thead>
+        <!-- Orders List -->
+        <tbody class="bg-white divide-y divide-gray-200" data-controller="order-row">
+          <% @orders.each do |order| %>
+            <%= render "admin/orders/table", order: order %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Pagination -->
+  <%= render "shared/pagination", pagy: @pagy %>
+</div>
