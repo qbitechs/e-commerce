@@ -1,11 +1,10 @@
 # app/controllers/carts_controller.rb
 class CartsController < ApplicationController
   before_action :authenticate_customer!, only: %i[ checkout ]
-  before_action :set_cart
 
   def show
-    @cart_items = @cart.cart_items.includes(:product)
-    @total_price = @cart.total_price
+    @cart_items = current_cart.cart_items.includes(:product)
+    @total_price = current_cart.total_price
   end
 
   def checkout
@@ -16,7 +15,7 @@ class CartsController < ApplicationController
         build_order!
         create_order_items!
         decrement_stock!
-        @cart.clear!
+        current_cart.clear!
       end
 
       flash[:success] = "Checkout successful! Your order ##{@order.id} has been placed."
@@ -33,10 +32,6 @@ class CartsController < ApplicationController
   end
 
   private
-
-  def set_cart
-    @cart = current_customer.cart
-  end
 
   def redirect_if_empty_cart
     flash[:alert] = "Your cart is empty. Checkout cannot proceed."

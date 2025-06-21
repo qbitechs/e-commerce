@@ -1,11 +1,16 @@
 class ApplicationController < ActionController::Base
-  before_action :set_current_cart
-
   allow_browser versions: :modern
 
   include Pagy::Backend
 
   helper_method :current_cart, :admin_user_signed_in?
+
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(Customer)
+      merge_anonymous_cart
+    end
+    super
+  end
 
   private
 
@@ -19,10 +24,6 @@ class ApplicationController < ActionController::Base
 
   def current_cart
     cart_service.current_cart
-  end
-
-  def set_current_cart
-    @current_cart = current_cart
   end
 
   def merge_anonymous_cart

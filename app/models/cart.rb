@@ -32,7 +32,7 @@ class Cart < ApplicationRecord
     customer_id.blank?
   end
 
-  def authenticated? # need to refactor current_customer
+  def authenticated?
     customer_id.present?
   end
 
@@ -40,7 +40,7 @@ class Cart < ApplicationRecord
     cart_items.sum(:quantity)
   end
 
-  def add_product(product, quantity = 1)
+  def add(product, quantity = 1) # done
     current_item = cart_items.find_by(product: product)
 
     if current_item
@@ -51,18 +51,16 @@ class Cart < ApplicationRecord
     end
   end
 
-  def remove_product(product)
+  def remove(product)
     cart_items.find_by(product: product)&.destroy
   end
 
-  def update_quantity(product, quantity)
+  def update(product, quantity) # done
     item = cart_items.find_by(product: product)
     return false unless item
 
     if quantity > 0
       item.update(quantity: quantity)
-    else
-      item.destroy
     end
   end
 
@@ -70,7 +68,7 @@ class Cart < ApplicationRecord
     return if other_cart.nil? || other_cart == self
 
     other_cart.cart_items.each do |item|
-      add_product(item.product, item.quantity)
+      add(item.product, item.quantity)
     end
 
     other_cart.destroy
