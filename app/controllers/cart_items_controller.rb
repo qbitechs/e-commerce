@@ -6,7 +6,7 @@ class CartItemsController < ApplicationController
   def create
     if @validation_error
       flash[:alert] =  @validation_error
-    elsif current_cart.add(@product, @quantity)
+    elsif find_or_create_cart.add(@product, @quantity)
       flash[:success] = "#{@product.name} added to cart"
     else
       flash[:alert] = "Failed to add #{@product.name} to cart"

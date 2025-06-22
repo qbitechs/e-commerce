@@ -3,8 +3,8 @@ class CartsController < ApplicationController
   before_action :authenticate_customer!, only: %i[ checkout ]
 
   def show
-    @cart_items = current_cart.cart_items.includes(:product)
-    @total_price = current_cart.total_price
+    @cart_items = current_cart&.cart_items&.includes(:product)
+    @total_price = current_cart&.total_price
   end
 
   def checkout
@@ -15,7 +15,7 @@ class CartsController < ApplicationController
         build_order!
         create_order_items!
         decrement_stock!
-        current_cart.clear!
+        current_cart&.clear!
       end
 
       flash[:success] = "Checkout successful! Your order ##{@order.id} has been placed."

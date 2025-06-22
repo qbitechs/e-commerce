@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_cart
-    cart_service.current_cart
+    cart_service.find_existing_cart
+  end
+
+  def find_or_create_cart
+    cart_service.find_or_create_cart
   end
 
   def merge_anonymous_cart
