@@ -40,7 +40,7 @@ class Cart < ApplicationRecord
     cart_items.sum(:quantity)
   end
 
-  def add(product, quantity = 1) # done
+  def add(product, quantity = 1)
     current_item = cart_items.find_by(product: product)
 
     if current_item

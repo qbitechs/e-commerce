@@ -27,7 +27,11 @@ class CartService
     else
       # Anonymous user
       session_cart_id = @session[:cart_id]
-      session_cart_id ? Cart.find_by(id: session_cart_id, customer_id: nil) : create_session_cart
+      if session_cart_id
+        Cart.find_by(id: session_cart_id, customer_id: nil) || create_session_cart
+      else
+        create_session_cart
+      end
     end
   end
 

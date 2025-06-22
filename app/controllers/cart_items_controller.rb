@@ -5,11 +5,11 @@ class CartItemsController < ApplicationController
 
   def create
     if @validation_error
-      flash[:alert] = error
+      flash[:alert] =  @validation_error
     elsif current_cart.add(@product, @quantity)
-      flash[:notice] = "#{@product.name} added to cart"
+      flash[:success] = "#{@product.name} added to cart"
     else
-      flash[:alert] = "Unable to add item to cart"
+      flash[:alert] = "Failed to add #{@product.name} to cart"
     end
 
     redirect_back(fallback_location: root_path)
@@ -17,11 +17,11 @@ class CartItemsController < ApplicationController
 
   def update
     if @validation_error
-      flash[:alert] = error
+      flash[:alert] =  @validation_error
     elsif current_cart.update(@product, @quantity)
-      flash[:notice] = "#{@product.name} added to cart"
+      flash[:success] = "Cart updated: #{@product.name} quantity changed to #{@quantity}"
     else
-      flash[:alert] = "Unable to add item to cart"
+      flash[:alert] = "Failed to update #{@product.name}"
     end
 
     redirect_to cart_path
@@ -30,9 +30,9 @@ class CartItemsController < ApplicationController
   # DELETE /cart_items/:id
   def destroy
     if current_cart.remove(@product)
-      flash[:notice] = "#{@product.name} removed from cart"
+      flash[:success] = "#{@product.name} removed from cart"
     else
-      flash[:notice] = "Unable to remove #{@product.name} from cart"
+      flash[:notice] = "Failed to remove #{@product.name} from cart"
     end
 
     redirect_to cart_path
@@ -49,7 +49,7 @@ class CartItemsController < ApplicationController
   end
 
   def set_quantity
-    @quantity = cart_item_params[:quantity].to_i || params[:quantity].to_i
+    @quantity = (params[:quantity] || cart_item_params[:quantity]).to_i
   end
 
   def validate_quantity
