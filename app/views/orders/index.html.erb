@@ -24,11 +24,12 @@
         </tr>
       </thead>
       <!-- Table Body -->
-      <% @orders.each do |order| %>
-        <%= render "orders/table", order: order %>
-      <% end %>
-    </table>
+      <tbody class="divide-y divide-gray-200" data-controller="order-row">
+        <% @orders.each do |order| %>
+          <%= render "orders/table", order: order %>
+        <% end %>
+      </table>
+    </div>
+    <!-- Pagination -->
+    <%= render "shared/pagination", pagy: @pagy %>
   </div>
-  <!-- Pagination -->
-  <%= render "shared/pagination", pagy: @pagy %>
-</div>

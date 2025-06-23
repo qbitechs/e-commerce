@@ -1,5 +1,5 @@
 <% order_id = order.id %>
-<tr class="cursor-pointer" data-order-row-target="row" data-action="click->order-row#toggle" data-order-id="<%= order_id %>" aria-expanded="false" id="row-<%= order_id %>">
+<tr class="cursor-pointer" data-order-row-target="row" data-action="click->order-row#toggle" data-order-id="<%= order_id %>">
   <!-- Order & Customer -->
   <td class="px-6 py-4 whitespace-nowrap">
     <div class="flex items-center space-x-4">
@@ -60,7 +60,7 @@
   </td>
 </tr>
 <!-- Details Row: hidden by default -->
-<tr id="details-<%= order_id %>" class="bg-gray-50 hidden" data-order-row-target="details">
+<tr class="bg-gray-50 hidden" data-order-row-target="details" data-order-id="<%= order_id %>">
   <td colspan="6" class="px-6 py-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Customer Info -->
