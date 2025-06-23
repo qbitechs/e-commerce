@@ -22,10 +22,12 @@
       </div>
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex space-x-8 ml-10">
-          <%= link_to "Home", admin_user_signed_in? ? admin_root_path : root_path, class: nav_link_classes(root_path) %>
-          <% if admin_user_signed_in? || customer_signed_in? %>
-            <%= link_to "Orders", admin_user_signed_in? ? admin_orders_path : orders_path, class: nav_link_classes(orders_path) %>
+        <% unless admin_user_signed_in? %>
+          <%= link_to "Home", root_path, class: nav_link_classes(root_path) %>
+          <% if customer_signed_in? %>
+            <%= link_to "Orders", orders_path, class: nav_link_classes(orders_path) %>
           <% end %>
+        <% end %>
       </nav>
       <!-- Search Bar -->
       <div class="hidden md:flex flex-1 max-w-md mx-8">
@@ -67,14 +69,16 @@
           </div>
         </div>
         <!-- Cart -->
-        <%= link_to cart_path, class: "flex items-center text-gray-600 hover:text-indigo-600 transition-colors relative group" do %>
-          <div class="p-1.5 rounded-full group-hover:bg-indigo-50 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          </div>
-          <span class="absolute top-0 right-0 bg-indigo-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs font-medium transform -translate-y-1 translate-x-1 animate-pulse" id="count"><%= current_cart&.cart_items&.count || 0 %></span>
-          <span class="hidden md:inline ml-1 font-medium">Cart</span>
+        <% unless admin_user_signed_in? %>
+          <%= link_to cart_path, class: "flex items-center text-gray-600 hover:text-indigo-600 transition-colors relative group" do %>
+            <div class="p-1.5 rounded-full group-hover:bg-indigo-50 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <span class="absolute top-0 right-0 bg-indigo-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs font-medium transform -translate-y-1 translate-x-1 animate-pulse" id="count"><%= current_cart&.cart_items&.count || 0 %></span>
+            <span class="hidden md:inline ml-1 font-medium">Cart</span>
+          <% end %>
         <% end %>
       </div>
     </div>

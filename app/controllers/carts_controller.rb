@@ -5,7 +5,6 @@ class CartsController < ApplicationController
     @total_price = current_cart&.total_price
   end
 
-  # need to refactor checkout
   def checkout
     return redirect_if_empty_cart if current_cart&.cart_items.empty?
 
