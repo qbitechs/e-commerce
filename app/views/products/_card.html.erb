@@ -1,13 +1,5 @@
 <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
-  <% if admin_user_signed_in? %>
-    <%= link_to edit_admin_product_path(product), class: "relative group" do %>
-      <%= render partial: "products/card_image", locals: { product: product, admin: true } %>
-    <% end %>
-  <% elsif customer_signed_in? %>
-    <%= link_to product_path(product) do %>
-      <%= render partial: "products/card_image", locals: { product: product, admin: false } %>
-    <% end %>
-  <% else %>
+  <%= link_to product_path(product) do %>
     <%= render partial: "products/card_image", locals: { product: product, admin: false } %>
   <% end %>
   <!-- Product Info -->
