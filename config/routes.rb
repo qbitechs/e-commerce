@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root to: "products#index"
-
   # Carts:
   resource :cart, only: [ :show ] do
     resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
@@ -18,6 +16,10 @@ Rails.application.routes.draw do
     passwords:     "customers/passwords"
   }
 
+  authenticated :customer do
+    root to: "products#index", as: :customer_root
+  end
+
   namespace :admin do
     root to: "products#index"
 
@@ -28,4 +30,6 @@ Rails.application.routes.draw do
 
     resources :orders, only: [ :index ]
   end
+
+  root to: "static#index"
 end
