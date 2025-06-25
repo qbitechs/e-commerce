@@ -5,6 +5,7 @@ class CreateProducts < ActiveRecord::Migration[8.0]
       t.text   :description
       t.decimal :price, precision: 10, scale: 2
       t.integer :stock
+      t.string  :category
       t.string  :sku
       t.timestamps
     end
