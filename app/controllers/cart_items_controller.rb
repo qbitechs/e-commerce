@@ -6,13 +6,14 @@ class CartItemsController < ApplicationController
   def create
     if @validation_error
       flash[:alert] =  @validation_error
+      redirect_back(fallback_location: root_path)
     elsif find_or_create_cart.add(@product, @quantity)
       flash[:success] = "#{@product.name} added to cart"
+      redirect_to products_path
     else
       flash[:alert] = "Failed to add #{@product.name} to cart"
+      redirect_back(fallback_location: root_path)
     end
-
-    redirect_back(fallback_location: root_path)
   end
 
   def update
