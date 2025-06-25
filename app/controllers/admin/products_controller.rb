@@ -3,7 +3,6 @@ class Admin::ProductsController < Admin::ApplicationController
 
   def index
     @pagy, @products = pagy(Product.all)
-    render "products/index"
   end
 
   def show; end

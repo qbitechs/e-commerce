@@ -62,10 +62,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "customer_id", null: false
+    t.bigint "customer_id"
+    t.string "session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_carts_on_customer_id"
+    t.index ["session_id"], name: "index_carts_on_session_id"
   end
 
   create_table "customers", force: :cascade do |t|
