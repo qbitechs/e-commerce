@@ -12,19 +12,30 @@
   </div>
   <!-- Filter and Search Bar -->
   <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6">
-    <%= form_with url: "#", method: :get, local: true, class: "flex flex-col md:flex-row md:items-center md:justify-between" do |form| %>
+    <%= search_form_for @q, url: admin_products_path, method: :get, html: { class: "flex flex-col md:flex-row md:items-center md:justify-between" } do |f| %>
+
       <div class="flex items-center mb-4 md:mb-0">
         <div class="relative mr-4">
           <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-          <%= form.text_field :search, placeholder: "Search products...", value: params[:search], class: "pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64" %>
+
+          <%= f.text_field :name_or_sku_cont, placeholder: "Search products…", class: "pl-10 pr-10 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64" %>
+
+          <% if params.dig(:q, :name_or_sku_cont).present? %>
+            <%= link_to admin_products_path, class: "absolute right-3 top-3 text-gray-400 hover:text-gray-600", title: "Clear search" do %>
+              <i class="fas fa-times"></i>
+            <% end %>
+          <% end %>
         </div>
-        <%= form.submit "Search", class: "bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg inline-flex items-center cursor-pointer" %>
+
+        <%= f.submit "Search", class: "bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg inline-flex items-center cursor-pointer" %>
       </div>
+
       <div class="text-sm text-gray-600">
-        Showing <%= @products.count %> products
+        Showing <%= @pagy.count %> products
       </div>
     <% end %>
   </div>
+
   <!-- Products Table -->
   <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
     <% if @products.any? %>
