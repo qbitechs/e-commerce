@@ -14,3 +14,6 @@ application.register("flash", FlashController);
 
 import OrderRowController from "controllers/order_row_controller";
 application.register("order_row", OrderRowController);
+
+import ChoicesController from "controllers/choices_controller";
+application.register("choices", ChoicesController);
