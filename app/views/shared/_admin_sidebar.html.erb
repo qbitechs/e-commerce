@@ -12,8 +12,8 @@
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_orders_path)} hover:bg-gray-100" do %>
       <i class="fas fa-shopping-cart mr-3"></i> Orders
     <% end %>
-    <%= link_to "#",
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?("#")} hover:bg-gray-100" do %>
+    <%= link_to admin_customers_path,
+        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_customers_path)} hover:bg-gray-100" do %>
       <i class="fas fa-users mr-3"></i> Customers
     <% end %>
     <%= link_to "#",
