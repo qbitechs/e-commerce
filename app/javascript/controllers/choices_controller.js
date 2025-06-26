@@ -3,7 +3,6 @@ import "choices.js";
 
 export default class extends Controller {
   connect() {
-    console.log("cc");
     document.querySelectorAll("select").forEach((select) => {
       const dataAttributes = select.dataset;
       if (dataAttributes.initializeChoices) {

@@ -37,3 +37,6 @@
 !/app/assets/builds/.keep
 
 .byebug_history
+
+# Node modules
+/node_modules/
