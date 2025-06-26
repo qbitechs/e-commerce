@@ -1,9 +1,11 @@
 class Admin::OrdersController < Admin::ApplicationController
   def index
-    @pagy, @orders = pagy(Order.includes(:customer, order_items: :product).order(created_at: :desc))
+    @q = Order.ransack(params[:q])
 
-    @total_orders = Order.count
-    @pending_orders = Order.where(status: "pending").count
-    @completed_orders = Order.where(status: "completed").count
+    @pagy, @orders = pagy(@q.result(distinct: true).includes(:customer, order_items: :product).order(created_at: :desc))
+    scoped = @q.result(distinct: true)
+    @total_orders     = scoped.count
+    @pending_orders   = scoped.where(status: "pending").count
+    @completed_orders = scoped.where(status: "completed").count
   end
 end
