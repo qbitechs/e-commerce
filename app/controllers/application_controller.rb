@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_cart, :admin_user_signed_in?
 
+  set_current_tenant_through_filter
+  before_action :set_current_store
+
   def after_sign_in_path_for(resource)
     if resource.is_a?(Customer)
       merge_anonymous_cart
@@ -32,5 +35,22 @@ class ApplicationController < ActionController::Base
 
   def merge_anonymous_cart
     cart_service.merge_anonymous_cart_on_login(current_customer) if current_customer
+  end
+
+  def set_current_store
+    # Identify store by subdomain or custom domain
+    host = request.host
+    subdomain = request.subdomains.first
+    if subdomain.present?
+      store = Store.find_by(subdomain: subdomain)
+    else
+      store = Store.joins(:custom_domain).find_by(custom_domains: { domain: host })
+    end
+    if store
+      ActsAsTenant.current_tenant = store
+    else
+      # Optionally handle missing store (redirect or error)
+      ActsAsTenant.current_tenant = nil
+    end
   end
 end
