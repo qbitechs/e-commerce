@@ -110,6 +110,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
     t.index ["store_id"], name: "index_customers_on_store_id"
   end
 
+  create_table "meta_tags", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "keywords"
+    t.string "image_url"
+    t.string "page"
+    t.bigint "admin_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_meta_tags_on_admin_user_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.bigint "product_id", null: false
@@ -189,6 +201,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
   add_foreign_key "categories", "stores"
   add_foreign_key "custom_domains", "stores"
   add_foreign_key "customers", "stores"
+  add_foreign_key "meta_tags", "admin_users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
