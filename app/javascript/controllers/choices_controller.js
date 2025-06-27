@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import "choices.js";
+import "choices";
 
 export default class extends Controller {
   connect() {
