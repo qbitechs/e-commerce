@@ -6,6 +6,15 @@ class Product < ApplicationRecord
 
   validates :name, :price, :stock, :sku, presence: true
 
+  enum :category, {
+    electronics:     "electronics",
+    clothing:        "clothing",
+    home_appliances: "home_appliances",
+    books:           "books",
+    toys:            "toys",
+    sports:          "sports"
+  }
+
   def validate_cart_quantity(quantity)
     return "Currently! #{name} is out of stock." if stock == 0
     return "Only #{stock} items available." if quantity > stock

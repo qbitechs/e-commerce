@@ -116,6 +116,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
     t.text "description"
     t.decimal "price", precision: 10, scale: 2
     t.integer "stock"
+    t.string "category"
     t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

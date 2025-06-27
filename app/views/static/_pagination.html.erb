@@ -1,0 +1,23 @@
+<div class="flex space-x-2">
+  <% if @pagy.prev %>
+    <%= link_to request.path, params: request.query_parameters.merge(page: @pagy.prev), 
+        class: "w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition duration-300" do %>
+      <i class="fas fa-chevron-left text-gray-600"></i>
+    <% end %>
+  <% else %>
+    <button disabled class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center shadow-md opacity-50 cursor-not-allowed">
+      <i class="fas fa-chevron-left text-gray-400"></i>
+    </button>
+  <% end %>
+
+  <% if @pagy.next %>
+    <%= link_to request.path, params: request.query_parameters.merge(page: @pagy.next), 
+        class: "w-12 h-12 bg-accent rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition duration-300" do %>
+      <i class="fas fa-chevron-right text-black"></i>
+    <% end %>
+  <% else %>
+    <button disabled class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center shadow-md opacity-50 cursor-not-allowed">
+      <i class="fas fa-chevron-right text-gray-400"></i>
+    </button>
+  <% end %>
+</div>
