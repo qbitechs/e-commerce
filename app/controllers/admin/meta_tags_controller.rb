@@ -1,4 +1,5 @@
 class Admin::MetaTagsController < Admin::ApplicationController
+  before_action :prevent_super_admin_direct_access
   before_action :set_meta_tag, only: [ :edit, :update, :destroy ]
 
   def index
