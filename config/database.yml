@@ -16,8 +16,8 @@ test:
 production:
   primary:
     <<: *default
-    username: ENV["POSTGRES_USER"]
-    password: ENV["POSTGRES_PASSWORD"]
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_production
   cache:
     <<: *default
