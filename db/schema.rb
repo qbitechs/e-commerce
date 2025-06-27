@@ -45,6 +45,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
   create_table "admin_users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
+    t.boolean "super_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_admin_users_on_email_address", unique: true
