@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  store: one
+  domain: MyString
+  status: MyString
+  verified_at: 2025-06-28 02:05:34
+
+two:
+  store: two
+  domain: MyString
+  status: MyString
+  verified_at: 2025-06-28 02:05:34
