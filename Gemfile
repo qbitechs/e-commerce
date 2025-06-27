@@ -74,3 +74,5 @@ gem "tailwindcss-rails", "~> 4.2"
 gem "pagy"
 
 gem "ransack"
+
+gem "meta-tags"
