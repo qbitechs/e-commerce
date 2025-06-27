@@ -1,4 +1,5 @@
 class Admin::ProductsController < Admin::ApplicationController
+  before_action :prevent_super_admin_direct_access
   before_action :set_product, only: %i[show edit update destroy]
   before_action :set_categories, only: %i[new create edit update]
 
