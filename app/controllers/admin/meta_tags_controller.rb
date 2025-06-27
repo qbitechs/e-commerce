@@ -2,7 +2,7 @@ class Admin::MetaTagsController < Admin::ApplicationController
   before_action :set_meta_tag, only: [ :edit, :update, :destroy ]
 
   def index
-    @meta_tags = Current.admin_user&.meta_tags.all
+    @tags = Current.admin_user&.meta_tags.all
   end
 
   def new
