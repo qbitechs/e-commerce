@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     page = request.url
     meta_tag = MetaTag.find_by(page: page)
     if meta_tag
-      set_meta_tags(title: meta_tag.title, description: meta_tag.description, keywords: meta_tag.keywords, image_src: meta_tag.image_url)
+      set_meta_tags(title: meta_tag.title, description: meta_tag.description, keywords: meta_tag.keywords)
     end
   end
 end
