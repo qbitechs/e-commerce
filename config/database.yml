@@ -21,13 +21,19 @@ production:
     database: e_commerce_production
   cache:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_cache_production
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_queue_production
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_cable_production
     migrations_paths: db/cable_migrate
