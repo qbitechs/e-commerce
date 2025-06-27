@@ -1,4 +1,6 @@
 class Customer < ApplicationRecord
+  belongs_to :store
+
   # ToDo Customer donot delete, soft delete
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
