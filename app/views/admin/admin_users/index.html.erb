@@ -1,0 +1,22 @@
+<h1>All Admin Users</h1>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Super Admin</th>
+    <th>Actions</th>
+  </tr>
+  <% @admin_users.each do |admin| %>
+    <tr>
+      <td><%= admin.email_address %></td>
+      <td><%= admin.super_admin? ? "Yes" : "No" %></td>
+      <td>
+        <% unless admin == Current.admin_user %>
+          <%= button_to "Sign in as", switch_to_admin_admin_user_path(admin), method: :post %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% if session[:original_admin_user_id] %>
+  <%= button_to "Stop Impersonating", switch_back_admin_admin_users_path, method: :post %>
+<% end %> 
