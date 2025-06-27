@@ -32,6 +32,15 @@ Rails.application.routes.draw do
     resources :customers, only: [ :index ]
 
     resources :meta_tags
+
+    resources :admin_users, only: [ :index ] do
+      member do
+        post :switch_to
+      end
+      collection do
+        post :switch_back
+      end
+    end
   end
 
   root to: "static#index"
