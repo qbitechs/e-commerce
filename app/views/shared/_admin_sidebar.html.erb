@@ -1,38 +1,40 @@
 <!-- app/views/shared/_admin_sidebar.html.erb -->
-<div class="w-64 bg-white shadow-md fixed left-0 top-0 h-full z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out" id="admin-sidebar">
-  <div class="p-5 border-b">
-    <h1 class="text-xl font-bold text-indigo-600">Admin Panel</h1>
-  </div>
-  <nav class="mt-5">
-    <%= link_to admin_products_path,
+<% unless Current.admin_user&.super_admin? && session[:original_admin_user_id].nil? %>
+  <div class="w-64 bg-white shadow-md fixed left-0 top-0 h-full z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out" id="admin-sidebar">
+    <div class="p-5 border-b">
+      <h1 class="text-xl font-bold text-indigo-600">Admin Panel</h1>
+    </div>
+    <nav class="mt-5">
+      <%= link_to admin_products_path,
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_products_path)} hover:bg-gray-100" do %>
-      <i class="fas fa-box mr-3"></i> Products
-    <% end %>
-    <%= link_to admin_orders_path,
+        <i class="fas fa-box mr-3"></i> Products
+      <% end %>
+      <%= link_to admin_orders_path,
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_orders_path)} hover:bg-gray-100" do %>
-      <i class="fas fa-shopping-cart mr-3"></i> Orders
-    <% end %>
-    <%= link_to admin_customers_path,
+        <i class="fas fa-shopping-cart mr-3"></i> Orders
+      <% end %>
+      <%= link_to admin_customers_path,
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_customers_path)} hover:bg-gray-100" do %>
-      <i class="fas fa-users mr-3"></i> Customers
-    <% end %>
-    <%= link_to admin_meta_tags_path,
+        <i class="fas fa-users mr-3"></i> Customers
+      <% end %>
+      <%= link_to admin_meta_tags_path,
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_meta_tags_path)} hover:bg-gray-100" do %>
-      <i class="fas fa-tag mr-3"></i> Meta Tag
-    <% end %>
-    <%= link_to "#",
+        <i class="fas fa-tag mr-3"></i> Meta Tag
+      <% end %>
+      <%= link_to "#",
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?("#")} hover:bg-gray-100" do %>
-      <i class="fas fa-chart-bar mr-3"></i> Analytics
-    <% end %>
-    <%= link_to "#",
+        <i class="fas fa-chart-bar mr-3"></i> Analytics
+      <% end %>
+      <%= link_to "#",
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?("#")} hover:bg-gray-100" do %>
-      <i class="fas fa-cog mr-3"></i> Settings
-    <% end %>
-  </nav>
-</div>
-<!-- Mobile overlay -->
-<div class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden" id="sidebar-overlay"></div>
-<!-- Mobile toggle button -->
-<button class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-md shadow-md" id="sidebar-toggle">
-  <i class="fas fa-bars text-gray-600"></i>
-</button>
+        <i class="fas fa-cog mr-3"></i> Settings
+      <% end %>
+    </nav>
+  </div>
+  <!-- Mobile overlay -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden" id="sidebar-overlay"></div>
+  <!-- Mobile toggle button -->
+  <button class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-md shadow-md" id="sidebar-toggle">
+    <i class="fas fa-bars text-gray-600"></i>
+  </button>
+<% end %>
