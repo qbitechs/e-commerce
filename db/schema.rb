@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_211106) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_212900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -154,6 +154,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_211106) do
     t.string "subdomain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "admin_user_id", null: false
+    t.index ["admin_user_id"], name: "index_stores_on_admin_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -171,4 +173,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_211106) do
   add_foreign_key "orders", "stores"
   add_foreign_key "products", "stores"
   add_foreign_key "sessions", "admin_users"
+  add_foreign_key "stores", "admin_users"
 end
