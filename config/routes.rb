@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     resources :orders, only: [ :index ]
     resources :customers, only: [ :index ]
     resource :domain_settings, only: [ :show, :update ]
+
+    resources :meta_tags
   end
 
   root to: "static#index"
