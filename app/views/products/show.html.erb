@@ -1,3 +1,10 @@
+<%
+  set_meta_tags(
+    title: @product.name,
+    description: @product.description,
+    image_src:  @product.image
+  )
+%>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <%= render "shared/breadcrumbs", current_page: @product.name, pre: [ "Product" ] %>
   <!-- Back to Products -->
