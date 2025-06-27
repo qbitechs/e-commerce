@@ -40,6 +40,6 @@ class Admin::MetaTagsController < Admin::ApplicationController
     end
 
     def meta_tag_params
-      params.require(:meta_tag).permit(:title, :description, :page)
+      params.require(:meta_tag).permit(:title, :description, :page, :image_url, :keywords)
     end
 end
