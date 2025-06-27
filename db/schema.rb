@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_210150) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -62,12 +62,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "customer_id"
-    t.string "session_id"
+    t.bigint "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_carts_on_customer_id"
-    t.index ["session_id"], name: "index_carts_on_session_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -116,7 +114,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
     t.text "description"
     t.decimal "price", precision: 10, scale: 2
     t.integer "stock"
-    t.string "category"
     t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,6 +127,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_195744) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_user_id"], name: "index_sessions_on_admin_user_id"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "name"
+    t.string "subdomain"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
