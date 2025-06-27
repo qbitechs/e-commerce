@@ -1,0 +1,26 @@
+<h1>Meta Tags</h1>
+<%= link_to 'New Meta Tag', new_admin_meta_tag_path, class: 'btn btn-primary' %>
+<table>
+  <thead>
+    <tr>
+      <th>Page</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @meta_tags.each do |meta_tag| %>
+      <tr>
+        <td><%= meta_tag.page %></td>
+        <td><%= meta_tag.title %></td>
+        <td><%= meta_tag.description %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_meta_tag_path(meta_tag) %> |
+          <%= link_to 'Delete', admin_meta_tag_path(meta_tag), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ 
