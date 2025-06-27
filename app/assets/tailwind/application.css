@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "choices.min";
 
 @theme {
   --color-primary: #1f2937;
