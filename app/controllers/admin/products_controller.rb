@@ -2,7 +2,8 @@ class Admin::ProductsController < Admin::ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
-    @pagy, @products = pagy(Product.all)
+    @q = Product.ransack(params[:q])
+    @pagy, @products = pagy(@q.result(distinct: true))
   end
 
   def show; end

@@ -11,4 +11,12 @@ class Order < ApplicationRecord
   def calculate_total!
     update!(total: order_items.sum { |item| item.quantity * item.unit_price })
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "status", "recipient_last_name", "recipient_first_name", "total", "created_at", "id" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

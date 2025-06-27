@@ -1,5 +1,6 @@
 class Admin::CustomersController < Admin::ApplicationController
   def index
-    @pagy, @customers = pagy(Customer.all)
+    @q = Customer.ransack(params[:q])
+    @pagy, @customers = pagy(@q.result(distinct: true))
   end
 end

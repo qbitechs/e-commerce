@@ -1,0 +1,25 @@
+<div class="bg-white rounded-xl shadow p-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <p class="text-gray-600 text-sm"><%= label %></p>
+      <p class="text-2xl font-bold mt-1"><%= value %></p>
+    </div>
+    <div class="<%= icon_bg %> p-3 rounded-full">
+      <i class="<%= icon_class %> <%= icon_color %> text-xl"></i>
+    </div>
+  </div>
+  <% if defined?(change) && !change.nil? %>
+    <div class="mt-4">
+      <% if change >= 0 %>
+        <span class="text-green-600 text-sm font-medium">
+          <i class="fas fa-arrow-up mr-1"></i><%= number_to_percentage(change, precision: 1) %>
+        </span>
+      <% else %>
+        <span class="text-red-600 text-sm font-medium">
+          <i class="fas fa-arrow-down mr-1"></i><%= number_to_percentage(change.abs, precision: 1) %>
+        </span>
+      <% end %>
+      <span class="text-gray-500 text-sm ml-2">from last month</span>
+    </div>
+  <% end %>
+</div>

@@ -21,4 +21,14 @@ class Product < ApplicationRecord
     return "Must have at least one item." if quantity <= 0
     nil
   end
+
+  private
+
+  def self.ransackable_attributes(auth_object = nil)
+    [ "name", "sku" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end
