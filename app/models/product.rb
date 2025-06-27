@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
-  belongs_to :store
+  acts_as_tenant(:store)
+
   has_one_attached :image
 
   has_many :order_items, dependent: :destroy

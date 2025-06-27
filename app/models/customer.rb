@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  belongs_to :store
+  acts_as_tenant(:store)
 
   # ToDo Customer donot delete, soft delete
   devise :database_authenticatable, :registerable,
