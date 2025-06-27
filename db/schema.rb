@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_210534) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_210835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -88,8 +88,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_210534) do
     t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
+    t.index ["store_id"], name: "index_customers_on_store_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -116,7 +118,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_210534) do
     t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["store_id"], name: "index_orders_on_store_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -127,7 +131,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_210534) do
     t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
     t.index ["sku"], name: "index_products_on_sku", unique: true
+    t.index ["store_id"], name: "index_products_on_store_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -152,8 +158,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_210534) do
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "customers"
   add_foreign_key "custom_domains", "stores"
+  add_foreign_key "customers", "stores"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "stores"
+  add_foreign_key "products", "stores"
   add_foreign_key "sessions", "admin_users"
 end
