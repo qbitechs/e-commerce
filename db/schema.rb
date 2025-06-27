@@ -114,7 +114,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
     t.string "title"
     t.text "description"
     t.string "keywords"
-    t.string "image_url"
     t.string "page"
     t.bigint "admin_user_id", null: false
     t.datetime "created_at", null: false
