@@ -17,16 +17,22 @@ end
 store1 = Store.find_or_create_by!(name: "Store One", subdomain: "store1", admin_user: super_admin)
 store2 = Store.find_or_create_by!(name: "Store Two", subdomain: "store2", admin_user: super_admin)
 
-# Add products to each store
+# Add categories and products to each store
 ActsAsTenant.with_tenant(store1) do
-  Product.find_or_create_by!(name: "Product A", price: 10, stock: 100, sku: "A1")
+  category1 = Category.find_or_create_by!(name: "Electronics", store: store1)
+  category2 = Category.find_or_create_by!(name: "Books", store: store1)
+  Product.find_or_create_by!(name: "Product A", price: 10, stock: 100, sku: "A1", category: category1)
+  Product.find_or_create_by!(name: "Product C", price: 15, stock: 60, sku: "C1", category: category2)
   Customer.find_or_create_by!(first_name: "Alice", last_name: "Smith", email: "alice@store1.com") do |customer|
     customer.password = "password"
   end
 end
 
 ActsAsTenant.with_tenant(store2) do
-  Product.find_or_create_by!(name: "Product B", price: 20, stock: 50, sku: "B1")
+  category1 = Category.find_or_create_by!(name: "Clothing", store: store2)
+  category2 = Category.find_or_create_by!(name: "Toys", store: store2)
+  Product.find_or_create_by!(name: "Product B", price: 20, stock: 50, sku: "B1", category: category1)
+  Product.find_or_create_by!(name: "Product D", price: 25, stock: 30, sku: "D1", category: category2)
   Customer.find_or_create_by!(first_name: "Bob", last_name: "Jones", email: "bob@store2.com") do |customer|
     customer.password = "password"
   end
