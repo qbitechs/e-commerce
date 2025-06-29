@@ -7,3 +7,27 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Create a super admin user
+super_admin = AdminUser.find_or_create_by!(email_address: "admin@example.com") do |user|
+  user.password = "password"
+end
+
+# Create two stores with different subdomains, each belonging to the super admin
+store1 = Store.find_or_create_by!(name: "Store One", subdomain: "store1", admin_user: super_admin)
+store2 = Store.find_or_create_by!(name: "Store Two", subdomain: "store2", admin_user: super_admin)
+
+# Add products to each store
+ActsAsTenant.with_tenant(store1) do
+  Product.find_or_create_by!(name: "Product A", price: 10, stock: 100, sku: "A1")
+  Customer.find_or_create_by!(first_name: "Alice", last_name: "Smith", email: "alice@store1.com") do |customer|
+    customer.password = "password"
+  end
+end
+
+ActsAsTenant.with_tenant(store2) do
+  Product.find_or_create_by!(name: "Product B", price: 20, stock: 50, sku: "B1")
+  Customer.find_or_create_by!(first_name: "Bob", last_name: "Jones", email: "bob@store2.com") do |customer|
+    customer.password = "password"
+  end
+end
