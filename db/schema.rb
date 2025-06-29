@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_214123) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_29_233049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,6 +72,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_214123) do
     t.index ["customer_id"], name: "index_carts_on_customer_id"
     t.index ["session_id"], name: "index_carts_on_session_id"
     t.index ["store_id"], name: "index_carts_on_store_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.bigint "store_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_id"], name: "index_categories_on_store_id"
   end
 
   create_table "custom_domains", force: :cascade do |t|
@@ -168,6 +176,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_214123) do
   add_foreign_key "carts", "customers"
   add_foreign_key "carts", "sessions"
   add_foreign_key "carts", "stores"
+  add_foreign_key "categories", "stores"
   add_foreign_key "custom_domains", "stores"
   add_foreign_key "customers", "stores"
   add_foreign_key "order_items", "orders"
