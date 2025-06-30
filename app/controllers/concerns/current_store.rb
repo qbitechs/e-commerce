@@ -13,9 +13,11 @@ module CurrentStore
     if store
       ActsAsTenant.current_tenant = store
       Current.store = store
+      session[:store_id] = store.id
     else
       ActsAsTenant.current_tenant = nil
       Current.store = nil
+      session[:store_id] = nil
     end
   end
 
