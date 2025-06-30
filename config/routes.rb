@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     resources :products
     resources :orders, only: [ :index ]
     resources :customers, only: [ :index ]
-    resource :domain_settings, only: [ :show, :update ]
+    resource :domain_settings, only: [ :show, :edit, :update ]
   end
 
   root to: "static#index"

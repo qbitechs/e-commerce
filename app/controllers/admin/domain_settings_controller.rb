@@ -3,6 +3,10 @@ class Admin::DomainSettingsController < Admin::BaseController
     @store = store
   end
 
+  def edit
+    @store = store
+  end
+
   def update
     domain_type = params[:store][:domain_type]
     if domain_type == "subdomain"
