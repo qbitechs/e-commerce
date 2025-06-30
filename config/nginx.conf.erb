@@ -1,0 +1,81 @@
+worker_processes 1;
+error_log stderr notice;
+daemon off;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    # This is where Kamal will inject the upstream server for your Rails app
+    <%= Kamal.proxy.upstream_config %>
+    # Server block for handling ACME challenges over HTTP and redirecting to HTTPS
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+        location /.well-known/acme-challenge/ {
+            # The path inside the container where challenges are stored
+            alias /etc/letsencrypt/challenges/;
+            access_log off;
+        }
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+    # Main server block for handling all HTTPS traffic
+    server {
+        listen 443 ssl http2 default_server;
+        listen [::]:443 ssl http2 default_server;
+        server_name _;
+        # These are fallback certificates for your main domain.
+        # Kamal will generate these for you on the first deploy.
+        ssl_certificate /etc/letsencrypt/live/<%= kamal.proxy.host %>/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/<%= kamal.proxy.host %>/privkey.pem;
+        # Lua block to dynamically load SSL certificates
+        ssl_certificate_by_lua_block {
+            local ssl_server_name = ngx.var.ssl_server_name
+            if ssl_server_name == nil then
+                ngx.log(ngx.ERR, "ssl_server_name is nil")
+                return ngx.exit(ngx.ERROR)
+            end
+            -- Define paths for the requested domain's certificate and key
+            local cert_path = "/etc/letsencrypt/live/" .. ssl_server_name .. "/fullchain.pem"
+            local key_path = "/etc/letsencrypt/live/" .. ssl_server_name .. "/privkey.pem"
+            -- Helper function to check if a file exists
+            local function file_exists(name)
+               local f = io.open(name, "r")
+               if f ~= nil then
+                   io.close(f)
+                   return true
+               else
+                   return false
+               end
+            end
+            -- If a certificate for the requested domain exists, load it.
+            if file_exists(cert_path) and file_exists(key_path) then
+                ngx.ssl.set_cert(cert_path)
+                ngx.ssl.set_privkey(key_path)
+                ngx.log(ngx.INFO, "Loaded custom certificate for " .. ssl_server_name)
+            else
+                -- Otherwise, Nginx will use the default certificate defined above.
+                ngx.log(ngx.INFO, "No custom certificate for " .. ssl_server_name .. ", using default.")
+            end
+        }
+        # Proxy all other requests to the Rails application
+        location / {
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Request-Start "t=${msec}";
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_redirect off;
+            proxy_pass http://<%= Kamal.proxy.upstream_name %>;
+            proxy_http_version 1.1;
+            proxy_read_timeout 3600;
+            proxy_send_timeout 3600;
+        }
+    }
+}
