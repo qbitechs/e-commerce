@@ -31,9 +31,3 @@ kamal proxy boot_config set --http-port 4444 --https-port 4445 -d "$KAMAL_DESTIN
 
 echo "Completed kamal proxy boot_config..."
 
-
-echo "Building up nginx config"
-
-erb ../../config/nginx.conf.erb > ../../config/nginx.conf
-
-echo "Completed building up nginx config"
