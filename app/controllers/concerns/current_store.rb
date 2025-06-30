@@ -8,7 +8,7 @@ module CurrentStore
   private
 
   def set_current_store
-    store = store_by_host || current_user_store || store_by_session
+    store = store_by_host || store_by_session || current_user_store
 
     if store
       ActsAsTenant.current_tenant = store
