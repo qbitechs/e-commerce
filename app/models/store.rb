@@ -10,4 +10,11 @@ class Store < ApplicationRecord
   has_many :cart_items, dependent: :destroy
 
   accepts_nested_attributes_for :custom_domain, allow_destroy: true
+
+  # Subdomain must be unique and not a reserved word.
+  validates :subdomain,
+            presence: true,
+            uniqueness: true,
+            format: { with: /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/ },
+            exclusion: { in: %w(www admin help support api platform) }
 end
