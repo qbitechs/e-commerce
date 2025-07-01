@@ -6,14 +6,17 @@ class Admin::AdminUsersController < Admin::ApplicationController
   end
 
   def switch_to
-    admin = User.find(params[:id])
-    session[:super_admin_id] = Current.user.id unless session[:super_admin_id]
-    session[:admin_id] = admin.id
-    redirect_to admin_root_path, notice: "Now signed in as #{admin.email_address}"
+    user = User.find(params[:id])
+    session[:true_user_id] = Current.user.id unless session[:true_user_id]
+    terminate_session
+    start_new_session_for(user)
+    redirect_to admin_root_path, notice: "Now signed in as #{user.email_address}"
   end
 
   def switch_back
-    session[:admin_id] = nil
+    terminate_session
+    start_new_session_for(User.find(session[:true_user_id]))
+    session[:true_user_id] = nil
     redirect_to admin_admin_users_path, notice: "Stopped impersonating."
   end
 end
