@@ -24,17 +24,31 @@ Rails.application.routes.draw do
     root to: "products#index", as: :customer_root
   end
 
+  # need to be refactor
   namespace :admin do
-    root to: "products#index"
-
     resource :session
     resources :passwords, param: :token
 
+    # Super admin routes
     constraints lambda { |request|
-      user = Session.find_by(id: request.cookie_jar.signed[:session_id]).user if request.cookie_jar.signed[:session_id]
-      user = User.find_by(id: user)
-      !user&.super_admin?
+      session_id = request.cookie_jar.signed[:session_id]
+      return false unless session_id
+      session = Session.find_by(id: session_id)
+      return false unless session&.user
+      session.user.super_admin?
     } do
+      root to: "admin_users#index", as: :super_admin_root
+    end
+
+    # Non-super admin routes
+    constraints lambda { |request|
+      session_id = request.cookie_jar.signed[:session_id]
+      return false unless session_id
+      session = Session.find_by(id: session_id)
+      return false unless session&.user
+      !session.user.super_admin?
+    } do
+      root to: "products#index"
       resources :products
       resources :orders, only: [ :index ]
       resources :customers, only: [ :index ]
