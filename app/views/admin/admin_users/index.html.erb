@@ -15,26 +15,34 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <% @admin_users.each do |admin| %>
-              <tr class="hover:bg-gray-50 <%= 'bg-blue-50' if admin == Current.user %>">
+            <% @admin_users.each do |user| %>
+              <tr class="hover:bg-gray-50 <%= 'bg-blue-50' if user == Current.user %>">
                 <td class="px-6 py-4 whitespace-nowrap align-middle">
-                  <%= admin.email_address %>
-                  <% if admin == Current.user %>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 ml-2">You</span>
+                  <%= user.email_address %>
+                  <% if user == Current.user %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 ml-2">
+                      You
+                    </span>
                   <% end %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center align-middle">
-                  <%= admin.super_admin? ?
-                     content_tag(:span, "Yes", class: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800") :
-                     content_tag(:span, "No", class: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800") %>
+                  <%= if user.super_admin?
+                    content_tag(:span, "Yes", class: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800")
+                    else
+                      content_tag(:span, "No", class: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800")
+                    end %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap align-middle">
-                  <%= content_tag(:span, "Impersonating", class: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800") if session[:super_admin_id] && admin.id == Current.admin_user.id %>
+                  <% if impersonating_user? && user.id == session[:true_user_id] %>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      Impersonating
+                    </span>
+                  <% end %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right align-middle">
                   <div class="inline-flex rounded-md shadow-sm">
-                    <% unless admin == Current.user %>
-                      <%= link_to "Sign in as", switch_to_admin_admin_user_path(admin), class: "inline-flex items-center px-3 py-2 border border-blue-300 text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to impersonate #{admin.email_address}?" } %>
+                    <% if user.id != session[:true_user_id] && user != Current.user %>
+                      <%= link_to "Sign in as", switch_to_admin_admin_user_path(user), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to impersonate #{user.email_address}?" }, class: "inline-flex items-center px-3 py-2 border border-blue-300 text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
                     <% end %>
                   </div>
                 </td>
@@ -45,12 +53,12 @@
       </div>
     </div>
   </div>
-  <% if session[:original_admin_user_id] %>
+  <% if impersonating_user? %>
     <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400">
       <div class="flex justify-between items-center">
         <div>
           <span class="font-semibold">Currently impersonating:</span>
-          <%= AdminUser.find(session[:original_admin_user_id]).email_address %>
+          <%= Current.user.email_address %>
         </div>
         <%= button_to "Stop Impersonating", switch_back_admin_admin_users_path, method: :post, class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-yellow-800 bg-yellow-100 hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" %>
       </div>
