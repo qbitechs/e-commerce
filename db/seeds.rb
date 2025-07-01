@@ -8,14 +8,19 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-# Create a super admin user
-super_admin = User.find_or_create_by!(email_address: "admin@example.com") do |user|
+# Create admin user
+admin = User.find_or_create_by!(email_address: "admin@example.com") do |user|
+  user.password = "password"
+end
+
+# Create super admin user
+User.find_or_create_by!(email_address: "super@example.com", super_admin: true) do |user|
   user.password = "password"
 end
 
 # Create two stores with different subdomains, each belonging to the super admin
-store1 = Store.find_or_create_by!(name: "Store One", subdomain: "store1", user: super_admin)
-store2 = Store.find_or_create_by!(name: "Store Two", subdomain: "store2", user: super_admin)
+store1 = Store.find_or_create_by!(name: "Store One", subdomain: "store1", user: admin)
+store2 = Store.find_or_create_by!(name: "Store Two", subdomain: "store2", user: admin)
 
 # Add categories and products to each store
 ActsAsTenant.with_tenant(store1) do
