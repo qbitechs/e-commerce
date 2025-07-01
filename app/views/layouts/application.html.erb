@@ -23,16 +23,16 @@
   </head>
   <body class="flex min-h-screen flex-col bg-gray-50">
     <%= render 'layouts/header' %>
-    <div class="<%= admin_user_signed_in? ? 'lg:ml-64' : '' %> flex flex-col flex-1 min-h-screen">
-      <% if admin_user_signed_in? %>
+    <div class="<%= user_signed_in? ? 'lg:ml-64' : '' %> flex flex-col flex-1 min-h-screen">
+      <% if user_signed_in? %>
         <%= render 'shared/admin_sidebar' %>
       <% end %>
-      <main class="<%= admin_user_signed_in? ? 'flex-1 p-6' : 'flex-1' %>">
+      <main class="<%= user_signed_in? ? 'flex-1 p-6' : 'flex-1' %>">
         <%= render 'shared/flash_messages' %>
         <%= yield %>
       </main>
     </div>
-    <% unless admin_user_signed_in? %>
+    <% unless user_signed_in? %>
       <%= render 'layouts/footer' %>
     <% end %>
   </body>

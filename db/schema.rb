@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_01_071646) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_01_101323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -105,10 +105,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_071646) do
     t.text "description"
     t.string "keywords"
     t.string "page"
-    t.bigint "admin_user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_meta_tags_on_admin_user_id"
+    t.index ["user_id"], name: "index_meta_tags_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -178,6 +178,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_071646) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "super_admin", default: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
@@ -189,7 +190,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_01_071646) do
   add_foreign_key "categories", "stores"
   add_foreign_key "custom_domains", "stores"
   add_foreign_key "customers", "stores"
-  add_foreign_key "meta_tags", "admin_users"
+  add_foreign_key "meta_tags", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
