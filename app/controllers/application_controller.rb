@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_meta_tags_from_db
 
+  before_action :set_meta_tags_from_db
+
   def after_sign_in_path_for(resource)
     if resource.is_a?(Customer)
       merge_anonymous_cart
