@@ -6,7 +6,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= display_meta_tags %>
-    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>
@@ -28,6 +27,9 @@
         <%= render 'shared/admin_sidebar' %>
       <% end %>
       <main class="<%= user_signed_in? ? 'flex-1 p-6' : 'flex-1' %>">
+        <% if impersonating_user? %>
+          <%= render 'shared/impersonation_banner' %>
+        <% end %>
         <%= render 'shared/flash_messages' %>
         <%= yield %>
       </main>
