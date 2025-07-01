@@ -18,8 +18,8 @@ servers:
 #
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
-  ssl: true
-  host: fabricfusionbyash.com
+  ssl: false
+  # host: fabricfusionbyash.com
 
 # Credentials for your image host.
 registry:
@@ -69,7 +69,7 @@ aliases:
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
   - "e_commerce_storage:/rails/storage"
-
+  - nginx_secrets:/etc/letsencrypt
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
@@ -109,24 +109,13 @@ accessories:
     directories:
       - data:/var/lib/postgresql/data
 
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     # Change to 3306 to expose port to the world instead of just local network.
-#     port: "127.0.0.1:3306:3306"
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: redis:7.0
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+  nginx:
+    service: nginx
+    image: openresty/openresty:1.21.4.1-alpine-fat
+    roles:
+      - web
+    port: 443:443
+    files:
+      - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
