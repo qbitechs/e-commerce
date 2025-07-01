@@ -6,6 +6,8 @@ class SslCertificateService
   # Use a shared Docker volume path for certs, e.g., /shared/certs
   CERTS_BASE_PATH = "/etc/letsencrypt/live"
 
+  attr_reader :account_private_key, :account_email
+
   # Use a class method to make it easier to call from a job
   def self.generate_for(custom_domain: nil, domain_name: nil)
     # Ensure the custom domain is valid and has not been processed yet
@@ -25,13 +27,28 @@ class SslCertificateService
   def initialize(custom_domain)
     @domain = custom_domain
     @private_key = OpenSSL::PKey::RSA.new(4096)
+    @account_private_key = OpenSSL::PKey::RSA.new(Rails.application.credentials.letsencrypt.private_key)
+    @account_email = Rails.application.credentials.letsencrypt.email
     # Use the single account private key stored in credentials for Let's Encrypt account
-    account_key = OpenSSL::PKey::RSA.new(Rails.application.credentials.letsencrypt.private_key)
-    @client = Acme::Client.new(private_key: account_key, directory: LETS_ENCRYPT_DIRECTORY)
+  end
+
+
+  def client
+    client = Acme::Client.new(private_key: account_private_key, directory: LETS_ENCRYPT_DIRECTORY)
+
+    begin
+      cache_key = Digest::SHA256.hexdigest("#{account_private_key}-#{LETS_ENCRYPT_DIRECTORY}")
+      Rails.cache.fetch("acme_account_status_#{cache_key}") { client.account.present? }
+    rescue Acme::Client::Error::AccountDoesNotExist
+      Rails.logger.info "Creating new ACME account - #{account_email}"
+      client.new_account(contact: "mailto:#{account_email}", terms_of_service_agreed: true)
+    end
+
+    client
   end
 
   def generate_and_store
-    order = @client.new_order(identifiers: [ @domain ])
+    order = client.new_order(identifiers: [ @domain ])
     authorization = order.authorizations.first
     challenge = authorization.http
 
