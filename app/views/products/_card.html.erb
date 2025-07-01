@@ -43,7 +43,7 @@
         </span>
       <% end %>
     </div>
-    <% if admin_user_signed_in? %>
+    <% if user_signed_in? %>
       <span class="mt-auto bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 px-4 rounded-lg transition duration-200 font-medium text-sm text-center opacity-50">Added</span>
     <% else %>
       <% if current_customer&.cart&.cart_items&.exists?(product_id: product.id) %>

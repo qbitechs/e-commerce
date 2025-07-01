@@ -1,5 +1,5 @@
 class Store < ApplicationRecord
-  belongs_to :admin_user
+  belongs_to :user
 
   has_one :custom_domain, dependent: :destroy
 
@@ -16,5 +16,5 @@ class Store < ApplicationRecord
             presence: true,
             uniqueness: true,
             format: { with: /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/ },
-            exclusion: { in: %w(www admin help support api platform) }
+            exclusion: { in: %w[www admin help support api platform] }
 end

@@ -39,9 +39,9 @@ module CurrentStore
   end
 
   def current_user_store
-    return nil unless Current.session&.admin_user
+    return nil unless Current.session&.user
 
-    Current.session.admin_user.stores.first
+    Current.session.user.stores.first
   end
 
   def store_by_session

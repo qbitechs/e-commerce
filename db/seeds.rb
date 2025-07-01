@@ -9,13 +9,13 @@
 #   end
 
 # Create a super admin user
-super_admin = AdminUser.find_or_create_by!(email_address: "admin@example.com") do |user|
+super_admin = User.find_or_create_by!(email_address: "admin@example.com") do |user|
   user.password = "password"
 end
 
 # Create two stores with different subdomains, each belonging to the super admin
-store1 = Store.find_or_create_by!(name: "Store One", subdomain: "store1", admin_user: super_admin)
-store2 = Store.find_or_create_by!(name: "Store Two", subdomain: "store2", admin_user: super_admin)
+store1 = Store.find_or_create_by!(name: "Store One", subdomain: "store1", user: super_admin)
+store2 = Store.find_or_create_by!(name: "Store Two", subdomain: "store2", user: super_admin)
 
 # Add categories and products to each store
 ActsAsTenant.with_tenant(store1) do

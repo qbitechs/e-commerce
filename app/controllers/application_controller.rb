@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include CurrentStore
 
-  helper_method :current_cart, :admin_user_signed_in?
+  helper_method :current_cart, :user_signed_in?
 
   set_current_tenant_through_filter
 
@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def admin_user_signed_in?
-    Current.admin_user.present?
+  def user_signed_in?
+    Current.user.present?
   end
 
   def cart_service
