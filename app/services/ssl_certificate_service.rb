@@ -7,11 +7,11 @@ class SslCertificateService
   CERTS_BASE_PATH = "/etc/letsencrypt/live"
 
   # Use a class method to make it easier to call from a job
-  def self.generate_for(custom_domain = nil, domain_name = nil)
+  def self.generate_for(custom_domain: nil, domain_name: nil)
     # Ensure the custom domain is valid and has not been processed yet
     raise "Custom domain or domain should be present" if custom_domain.blank? && domain_name.blank?
 
-    domain = cutom_domain&.domain || domain_name
+    domain = custom_domain&.domain || domain_name
     # Create an instance of the service and call the method to generate and store the certificate
     result = new(domain).generate_and_store
     if result.empty?
@@ -26,7 +26,7 @@ class SslCertificateService
     @domain = custom_domain
     @private_key = OpenSSL::PKey::RSA.new(4096)
     # Use the single account private key stored in credentials for Let's Encrypt account
-    account_key = OpenSSL::PKey::RSA.new(Rails.application.credentials.lets_encrypt.private_key)
+    account_key = OpenSSL::PKey::RSA.new(Rails.application.credentials.letsencrypt.private_key)
     @client = Acme::Client.new(private_key: account_key, directory: LETS_ENCRYPT_DIRECTORY)
   end
 
