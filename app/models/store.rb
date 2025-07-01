@@ -23,10 +23,10 @@ class Store < ApplicationRecord
             format: { with: /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/ },
             exclusion: { in: %w[www admin help support api platform] },
             unless: :has_custom_domain?
-end
 
-private
+  private
 
-def has_custom_domain?
-  custom_domain.present?
+  def has_custom_domain?
+    custom_domain.present?
+  end
 end
