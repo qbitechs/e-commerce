@@ -1,4 +1,4 @@
-class Store::CartItemsController < ApplicationController
+class Store::CartItemsController < Store::BaseController
   before_action :set_product,  only: %i[ create update destroy]
   before_action :set_quantity, only: %i[ create update ]
   before_action :validate_quantity, only: %i[ create update ]

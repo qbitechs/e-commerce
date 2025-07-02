@@ -1,4 +1,4 @@
-class Store::OrdersController < ApplicationController
+class Store::OrdersController < Store::BaseController
   before_action :authenticate_customer!
 
   def index
