@@ -4,7 +4,7 @@
       <!-- Logo -->
       <%= link_to root_path, class: "flex items-center group transition-transform duration-300 hover:scale-[1.02]" do %>
         <% if Current.store&.logo&.attached? %>
-          <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center mr-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3">
             <img src="<%= url_for(Current.store.logo) %>" alt="Store Logo" class="w-full h-full object-cover rounded-full">
           </div>
         <% else %>
