@@ -160,7 +160,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144213) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.string "title"
-    t.string "description"
     t.index ["user_id"], name: "index_stores_on_user_id"
   end
 
