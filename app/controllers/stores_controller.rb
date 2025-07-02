@@ -1,4 +1,4 @@
-class StoresController < ApplicationController
+class StoresController < Store::BaseController
   def show
     @store = Current.store
     if @store
