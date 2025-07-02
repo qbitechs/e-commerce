@@ -7,6 +7,7 @@ class Store < ApplicationRecord
   has_one_attached :logo
   has_one_attached :hero_image
 
+  has_many :categories, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :customers, dependent: :destroy
