@@ -1,6 +1,8 @@
 class Store < ApplicationRecord
   belongs_to :user
 
+  has_rich_text :description
+
   has_one :custom_domain, dependent: :destroy
   has_one_attached :logo
   has_one_attached :hero_image
