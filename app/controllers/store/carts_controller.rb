@@ -1,5 +1,5 @@
 # app/controllers/carts_controller.rb
-class CartsController < ApplicationController
+class Store::CartsController < ApplicationController
   def show
     @cart_items = current_cart&.cart_items&.includes(:product)
     @total_price = current_cart&.total_price
