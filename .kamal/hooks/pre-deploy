@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+
+# A sample pre-deploy hook
+#
+# Checks the Github status of the build, waiting for a pending build to complete for up to 720 seconds.
+#
+# Fails unless the combined status is "success"
+#
+# These environment variables are available:
+# KAMAL_RECORDED_AT
+# KAMAL_PERFORMER
+# KAMAL_VERSION
+# KAMAL_HOSTS
+# KAMAL_COMMAND
+# KAMAL_SUBCOMMAND
+# KAMAL_ROLES (if set)
+# KAMAL_DESTINATION (if set)
+
+
+# why this?
+# we are using nginx as web server to sub subdomain wildcards, nginx sends the traffic to kamal proxy
+# we need to make kamal-proxy to listen on anyother ports other than 443 & 80
+# because these ports are being used by nginx 
+
+# Print a message or do any preliminary work here
+
+echo "Running kamal proxy boot_config set..."
+
+# Run the command directly instead of using exec
+kamal proxy boot_config set --http-port 4444 --https-port 4445 -d "$KAMAL_DESTINATION"
+
+echo "Completed kamal proxy boot_config..."
+
+echo "Building up nginx config"
+
+erb ../../config/nginx.conf.erb > ../../config/nginx.conf
+
+echo "Completed building up nginx config"

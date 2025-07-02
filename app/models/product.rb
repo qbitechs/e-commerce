@@ -1,19 +1,14 @@
 class Product < ApplicationRecord
+  acts_as_tenant(:store)
+
+  belongs_to :category
+
   has_one_attached :image
 
   has_many :order_items, dependent: :destroy
   has_many :orders, through: :order_items
 
   validates :name, :price, :stock, :sku, presence: true
-
-  enum :category, {
-    electronics:     "electronics",
-    clothing:        "clothing",
-    home_appliances: "home_appliances",
-    books:           "books",
-    toys:            "toys",
-    sports:          "sports"
-  }
 
   def validate_cart_quantity(quantity)
     return "Currently! #{name} is out of stock." if stock == 0

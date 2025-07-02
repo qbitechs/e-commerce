@@ -16,6 +16,12 @@
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_customers_path)} hover:bg-gray-100" do %>
       <i class="fas fa-users mr-3"></i> Customers
     <% end %>
+
+    <%= link_to admin_domain_settings_path,
+        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_domain_settings_path)} hover:bg-gray-100" do %>
+      <i class="fas fa-cog mr-3"></i> Domain Settings
+    <% end %>
+
     <%= link_to "#",
         class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?("#")} hover:bg-gray-100" do %>
       <i class="fas fa-chart-bar mr-3"></i> Analytics

@@ -1,5 +1,6 @@
-class Admin::ProductsController < Admin::ApplicationController
+class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: %i[show edit update destroy]
+  before_action :set_categories, only: %i[new create edit update]
 
   def index
     @q = Product.ransack(params[:q])
@@ -45,7 +46,11 @@ class Admin::ProductsController < Admin::ApplicationController
     @product = Product.find(params[:id])
   end
 
+  def set_categories
+    @categories = Category.all
+  end
+
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :sku, :image, :category)
+    params.require(:product).permit(:name, :description, :price, :stock, :sku, :image, :category_id)
   end
 end
