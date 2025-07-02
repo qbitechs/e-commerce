@@ -6,43 +6,33 @@
         <div class="space-y-4">
           <p class="text-accent font-medium tracking-wide uppercase">New Collection 2025</p>
           <h1 class="text-5xl lg:text-7xl font-display font-bold leading-tight">
-            Elevate Your
-            <span class="text-accent">Style</span>
+            <% if Current.store&.title %>
+              <%= Current.store&.title %>
+            <% else %>
+              Elevate Your
+              <span class="text-accent">Style</span>
+            <% end %>
           </h1>
           <p class="text-xl text-gray-300 leading-relaxed">
-            Discover our curated collection of premium products designed for the modern lifestyle. 
-            Quality craftsmanship meets contemporary design.
+            <% if Current.store&.description %>
+              <%= Current.store&.description %>
+            <% else %>
+              Discover our curated collection of premium products designed for the modern lifestyle. 
+              Quality craftsmanship meets contemporary design.
+            <% end %>
           </p>
         </div>
         <div class="flex flex-col sm:flex-row gap-4">
-          <%= link_to "Explore Collection", products_path, class: "bg-accent text-black px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 transform hover:scale-105 inline-block text-center" %>          
-          <button class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-black transition duration-300">
-            Watch Story
-          </button>
-        </div>
-        <div class="flex items-center space-x-8 pt-4">
-          <div class="text-center">
-            <div class="text-3xl font-bold">25K+</div>
-            <div class="text-sm text-gray-400">Happy Customers</div>
-          </div>
-          <div class="text-center">
-            <div class="text-3xl font-bold">500+</div>
-            <div class="text-sm text-gray-400">Premium Products</div>
-          </div>
-          <div class="text-center">
-            <div class="text-3xl font-bold">4.9</div>
-            <div class="text-sm text-gray-400">Average Rating</div>
-          </div>
+          <%= link_to "Explore Collection", products_path, class: "bg-accent text-black px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 transform hover:scale-105 inline-block text-center" %>
         </div>
       </div>
       <div class="relative">
         <div class="aspect-square bg-gradient-to-br from-accent/20 to-transparent rounded-full p-8">
-          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=600&fit=crop" alt="Hero Product" class="w-full h-full object-cover rounded-full shadow-2xl">
-        </div>
-        <div class="absolute -bottom-6 -right-6 bg-white text-black p-6 rounded-2xl shadow-xl">
-          <div class="text-sm font-medium text-gray-600">Starting from</div>
-          <div class="text-2xl font-bold">$99</div>
-          <div class="text-sm text-accent">Free Shipping</div>
+          <% if Current.store&.hero_image&.attached? %>
+            <img src="<%= url_for(Current.store.hero_image) %>" alt="Hero Product" class="w-full h-full object-cover rounded-full shadow-2xl">
+          <% else%>
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=600&fit=crop" alt="Hero Product" class="w-full h-full object-cover rounded-full shadow-2xl">
+          <% end %>
         </div>
       </div>
     </div>

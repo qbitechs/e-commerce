@@ -19,6 +19,6 @@ class Admin::SettingsController < Admin::ApplicationController
   end
 
   def store_params
-    params.require(:store).permit(:title, :description)
+    params.require(:store).permit(:title, :description, :logo, :hero_image)
   end
 end

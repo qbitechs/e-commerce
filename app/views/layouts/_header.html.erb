@@ -3,10 +3,16 @@
     <div class="flex items-center justify-between">
       <!-- Logo -->
       <%= link_to root_path, class: "flex items-center group transition-transform duration-300 hover:scale-[1.02]" do %>
-        <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center mr-3">
-          <i class="fas fa-gem text-white"></i>
-        </div>
-        <h1 class="text-2xl font-display font-bold text-primary">Luxora</h1>
+        <% if Current.store&.logo&.attached? %>
+          <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center mr-3">
+            <img src="<%= url_for(Current.store.logo) %>" alt="Store Logo" class="w-full h-full object-cover rounded-full">
+          </div>
+        <% else %>
+          <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center mr-3">
+            <i class="fas fa-gem text-white"></i>
+          </div>
+        <% end %>
+        <h1 class="text-2xl font-display font-bold text-primary"><%= Current.store&.name || "Luxora" %></h1>
       <% end %>
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center space-x-8">
