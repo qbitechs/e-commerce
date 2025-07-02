@@ -1,4 +1,4 @@
-class Admin::DomainSettingsController < Admin::ApplicationController
+class Admin::DomainSettingsController < Admin::BaseController
   def show
     @store = store
   end

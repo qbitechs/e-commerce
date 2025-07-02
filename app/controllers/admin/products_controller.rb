@@ -1,4 +1,4 @@
-class Admin::ProductsController < Admin::ApplicationController
+class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :set_categories, only: %i[new create edit update]
 

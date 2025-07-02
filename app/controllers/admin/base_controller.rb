@@ -1,4 +1,4 @@
-class Admin::ApplicationController < ApplicationController
+class Admin::BaseController < ApplicationController
   include Authentication
 
   set_current_tenant_through_filter
