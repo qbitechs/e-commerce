@@ -3,38 +3,38 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Carts:
-  resource :cart, only: [ :show ] do
-    resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
-    post "checkout", on: :member
-  end
+  constraints(lambda { |req| req.host != "localhost" }) do
+    root to: "stores#show", as: :store
 
+    # Carts:
+    resource :cart, only: [ :show ] do
+      resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
+      post "checkout", on: :member
+    end
 
-  resources :products, only: [ :index, :show ]
-
-  resources :orders, only: [ :index ]
-
-  devise_for :customers, path: "customers", controllers: {
-    registrations: "customers/registrations",
-    sessions:      "customers/sessions",
-    passwords:     "customers/passwords"
-  }
-
-  authenticated :customer do
-    root to: "products#index", as: :customer_root
-  end
-
-  namespace :admin do
-    root to: "products#index"
-
-    resource :session
-    resources :passwords, param: :token
-
-    resources :products
-
+    resources :products, only: [ :index, :show ]
     resources :orders, only: [ :index ]
-    resources :customers, only: [ :index ]
-    resource :domain_settings, only: [ :show, :update ]
+
+    devise_for :customers, path: "customers", controllers: {
+      registrations: "customers/registrations",
+      sessions:      "customers/sessions",
+      passwords:     "customers/passwords"
+    }
+
+    authenticated :customer do
+      root to: "products#index", as: :customer_root
+    end
+
+
+    namespace :admin do
+      root to: "products#index"
+      resource :session
+      resources :passwords, param: :token
+      resources :products
+      resources :orders, only: [ :index ]
+      resources :customers, only: [ :index ]
+      resource :domain_settings, only: [ :show, :update ]
+    end
   end
 
   root to: "static#index"
