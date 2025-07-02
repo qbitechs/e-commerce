@@ -11,7 +11,10 @@ class SslCertificateService
   # Use a class method to make it easier to call from a job
   def self.generate_for(custom_domain: nil, domain_name: nil)
     # Ensure the custom domain is valid and has not been processed yet
-    raise "Custom domain or domain should be present" if custom_domain.blank? && domain_name.blank?
+    if (custom_domain.blank? || custom_domain.domain.nil?) && domain_name.blank?
+      Rails.logger.error "Custom domain or domain should be present"
+      return
+    end
 
     domain = custom_domain&.domain || domain_name
     # Create an instance of the service and call the method to generate and store the certificate
