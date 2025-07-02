@@ -24,17 +24,17 @@ Rails.application.routes.draw do
     authenticated :customer do
       root to: "products#index", as: :customer_root
     end
+  end
 
+  namespace :admin do
+    root to: "products#index"
 
-    namespace :admin do
-      root to: "products#index"
-      resource :session
-      resources :passwords, param: :token
-      resources :products
-      resources :orders, only: [ :index ]
-      resources :customers, only: [ :index ]
-      resource :domain_settings, only: [ :show, :update ]
-    end
+    resource :session
+    resources :passwords, param: :token
+    resources :products
+    resources :orders, only: [ :index ]
+    resources :customers, only: [ :index ]
+    resource :domain_settings, only: [ :show, :update ]
   end
 
   root to: "static#index"
