@@ -29,14 +29,33 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root to: "products#index"
-
     resource :session
     resources :passwords, param: :token
-    resources :products
-    resources :orders, only: [ :index ]
-    resources :customers, only: [ :index ]
-    resource :domain_settings, only: [ :show, :update ]
+
+    # Super admin routes
+    constraints AdminTypeConstraint.new(super_admin: true) do
+      root to: "admin_users#index", as: :super_admin_root
+    end
+
+    # Non-super admin routes
+    constraints AdminTypeConstraint.new(super_admin: false) do
+      root to: "products#index"
+      resources :products
+      resources :orders, only: [ :index ]
+      resources :customers, only: [ :index ]
+      resource :domain_settings, only: [ :show, :edit, :update ]
+      resource :settings, only: [ :edit, :update ]
+      resources :meta_tags
+    end
+
+    resources :admin_users, only: [ :index ] do
+      member do
+        post :switch_to
+      end
+      collection do
+        post :switch_back
+      end
+    end
   end
 
   root to: "static#index"

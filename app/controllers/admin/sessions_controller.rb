@@ -6,7 +6,7 @@ class Admin::SessionsController < Admin::BaseController
   end
 
   def create
-    if user = AdminUser.authenticate_by(params.permit(:email_address, :password))
+    if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for user
       redirect_to after_authentication_url
     else

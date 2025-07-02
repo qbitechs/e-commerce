@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "choices.js": "^11.1.0"
+    "@rails/actiontext": "^8.0.200",
+    "choices.js": "^11.1.0",
+    "trix": "^2.1.15"
   }
 }

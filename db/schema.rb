@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_29_233147) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,14 +50,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_233147) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "admin_users", force: :cascade do |t|
-    t.string "email_address", null: false
-    t.string "password_digest", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_admin_users_on_email_address", unique: true
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -108,6 +110,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_233147) do
     t.index ["store_id"], name: "index_customers_on_store_id"
   end
 
+  create_table "meta_tags", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "keywords"
+    t.string "page"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_meta_tags_on_user_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.bigint "product_id", null: false
@@ -153,12 +166,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_233147) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.bigint "admin_user_id", null: false
+    t.bigint "user_id", null: false
     t.string "ip_address"
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_sessions_on_admin_user_id"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "stores", force: :cascade do |t|
@@ -166,8 +179,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_233147) do
     t.string "subdomain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "admin_user_id", null: false
-    t.index ["admin_user_id"], name: "index_stores_on_admin_user_id"
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.index ["user_id"], name: "index_stores_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "super_admin", default: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -181,12 +204,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_29_233147) do
   add_foreign_key "categories", "stores"
   add_foreign_key "custom_domains", "stores"
   add_foreign_key "customers", "stores"
+  add_foreign_key "meta_tags", "users"
+  add_foreign_key "meta_tags", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "stores"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "stores"
-  add_foreign_key "sessions", "admin_users"
-  add_foreign_key "stores", "admin_users"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "stores", "users"
+  add_foreign_key "stores", "users"
 end

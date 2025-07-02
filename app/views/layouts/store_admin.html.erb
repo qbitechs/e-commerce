@@ -24,11 +24,12 @@
     <%= javascript_importmap_tags %>
   </head>
   <body class="flex min-h-screen flex-col bg-gray-50">
-    <% if admin_user_signed_in? %>
+    <% if user_signed_in? %>
       <!-- Admin Layout with Sidebar -->
       <%= render 'shared/admin_sidebar' %>
       <div class="lg:ml-64 flex flex-col min-h-screen">
         <%= render 'layouts/store_admin/header' %>
+        <%= render 'shared/impersonation_banner' %>
         <main class="flex-1 p-6">
           <%= render 'shared/flash_messages' %>
           <%= yield %>
