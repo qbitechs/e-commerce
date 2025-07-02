@@ -1,4 +1,4 @@
-class Admin::SettingsController < Admin::ApplicationController
+class Admin::SettingsController < Admin::BaseController
   before_action :set_store
 
   def edit; end
