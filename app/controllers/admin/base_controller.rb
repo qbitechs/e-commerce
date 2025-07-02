@@ -20,8 +20,12 @@ class Admin::BaseController < ApplicationController
   end
 
   def require_super_admin
-    unless Current.user&.super_admin? || impersonating_user?
-      redirect_to admin_root_path, alert: "Access denied."
-    end
+    return if Current.user&.super_admin?
+
+    redirect_to admin_root_path, alert: "Access denied."
+  end
+
+  def true_user
+    @true_user ||= User.find(session[:true_user_id]) if session[:true_user_id]
   end
 end

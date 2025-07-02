@@ -66,7 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "customer_id"
+    t.bigint "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "store_id", null: false
@@ -197,10 +197,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
+  add_foreign_key "cart_items", "stores"
   add_foreign_key "carts", "customers"
+  add_foreign_key "carts", "sessions"
+  add_foreign_key "carts", "stores"
   add_foreign_key "categories", "stores"
   add_foreign_key "custom_domains", "stores"
   add_foreign_key "customers", "stores"
+  add_foreign_key "meta_tags", "users"
   add_foreign_key "meta_tags", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
@@ -209,5 +213,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
   add_foreign_key "products", "categories"
   add_foreign_key "products", "stores"
   add_foreign_key "sessions", "users"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "stores", "users"
   add_foreign_key "stores", "users"
 end

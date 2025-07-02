@@ -1,5 +1,5 @@
 class Admin::AdminUsersController < Admin::BaseController
-  before_action :require_super_admin
+  before_action :require_super_admin, only: %i[index switch_to]
 
   def index
     @users = User.all
@@ -14,8 +14,12 @@ class Admin::AdminUsersController < Admin::BaseController
   end
 
   def switch_back
+    if true_user.blank?
+      return redirect_to admin_admin_users_path
+    end
+
     terminate_session
-    start_new_session_for(User.find(session[:true_user_id]))
+    start_new_session_for(true_user)
     session[:true_user_id] = nil
     redirect_to admin_admin_users_path, flash: { success: "Stopped impersonating." }
   end
