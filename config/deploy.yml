@@ -16,6 +16,8 @@ servers:
 proxy:
   ssl: false
   app_port: 3000
+  ssl_redirect: false
+
   # host: fabricfusionbyash.com
 
 # Credentials for your image host.
@@ -89,7 +91,10 @@ accessories:
     image: openresty/openresty:1.21.4.1-alpine-fat
     roles:
       - web
-    port: 443:443
+    options:
+      publish:
+        - "80:80"
+        - "443:443"
     files:
       - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
     volumes:
