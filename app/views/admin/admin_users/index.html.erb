@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <% @admin_users.each do |user| %>
+            <% @users.each do |user| %>
               <tr class="hover:bg-gray-50 <%= 'bg-blue-50' if user == Current.user %>">
                 <td class="px-6 py-4 whitespace-nowrap align-middle">
                   <%= user.email_address %>

@@ -11,12 +11,12 @@ class Admin::BaseController < ApplicationController
 
   before_action :set_current_store
 
-  helper_method :admin_user_signed_in?
+  helper_method :user_signed_in?
 
   private
 
-  def admin_user_signed_in?
-    Current.admin_user.present?
+  def user_signed_in?
+    Current.user.present?
   end
 
   def require_super_admin
