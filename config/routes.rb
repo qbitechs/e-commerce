@@ -6,23 +6,25 @@ Rails.application.routes.draw do
   constraints(lambda { |req| req.host != "localhost" }) do
     root to: "stores#show", as: :store
 
-    # Carts:
-    resource :cart, only: [ :show ] do
-      resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
-      post "checkout", on: :member
-    end
+    scope module: "store" do
+      # Carts:
+      resource :cart, only: [ :show ] do
+        resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
+        post "checkout", on: :member
+      end
 
-    resources :products, only: [ :index, :show ]
-    resources :orders, only: [ :index ]
+      resources :products, only: [ :index, :show ]
+      resources :orders, only: [ :index ]
 
-    devise_for :customers, path: "customers", controllers: {
-      registrations: "customers/registrations",
-      sessions:      "customers/sessions",
-      passwords:     "customers/passwords"
-    }
+      devise_for :customers, path: "customers", controllers: {
+        registrations: "store/customers/registrations",
+        sessions:      "store/customers/sessions",
+        passwords:     "store/customers/passwords"
+      }
 
-    authenticated :customer do
-      root to: "products#index", as: :customer_root
+      authenticated :customer do
+        root to: "products#index", as: :customer_root
+      end
     end
   end
 
