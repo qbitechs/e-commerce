@@ -5,5 +5,5 @@ class StaticController < ApplicationController
 
   def about; end
 
-  def contract; end
+  def contact; end
 end
