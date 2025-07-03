@@ -59,4 +59,7 @@ Rails.application.routes.draw do
   end
 
   root to: "static#index"
+  get "/pricing", to: "static#pricing"
+  get "/about", to: "static#about"
+  get "/contract", to: "static#contract"
 end

@@ -1,4 +1,9 @@
 class StaticController < ApplicationController
-  def index
-  end
+  def index; end
+
+  def pricing; end
+
+  def about; end
+
+  def contract; end
 end
