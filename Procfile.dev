@@ -1,1 +1,2 @@
 css: bin/rails tailwindcss:watch
+static_css: tailwindcss -i ./app/assets/stylesheets/static.css -o ./app/assets/builds/static.css --watch
