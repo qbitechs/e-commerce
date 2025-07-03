@@ -1,4 +1,4 @@
-<section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+<section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50" data-controller="static">
   <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
     <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 animate-slide-up">
       Terms of
@@ -310,23 +310,3 @@
     </div>
   </div>
 </section>
-
-<script>
-  // Scroll animation
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate');
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.animate-on-scroll').forEach(el => {
-    observer.observe(el);
-  });
-</script>
