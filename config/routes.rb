@@ -62,4 +62,6 @@ Rails.application.routes.draw do
   get "/pricing", to: "static#pricing"
   get "/about", to: "static#about"
   get "/contact", to: "static#contact"
+  get "/privacy-policy", to: "static#privacy"
+  get "/terms-of-service", to: "static#terms"
 end
