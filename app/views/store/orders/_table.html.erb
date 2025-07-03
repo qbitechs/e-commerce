@@ -39,7 +39,7 @@
           <div class="text-right">
             <div class="mb-1">
               <span class="text-gray-600">Subtotal:</span>
-              <span class="font-medium">$245.99</span>
+              <span class="font-medium"><%= number_to_currency(order.total) %></span>
             </div>
             <div class="mb-1">
               <span class="text-gray-600">Shipping:</span>
@@ -47,11 +47,11 @@
             </div>
             <div class="mb-1">
               <span class="text-gray-600">Tax:</span>
-              <span class="font-medium">$19.68</span>
+              <span class="font-medium">$0.00</span>
             </div>
             <div class="text-lg mt-2">
               <span class="text-gray-800">Total:</span>
-              <span class="font-bold">$265.67</span>
+              <span class="font-bold"><%= number_to_currency(order.total) %></span>
             </div>
           </div>
         </div>
