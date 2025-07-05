@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
-@theme {
-  --color-primary: #1f2937;
-  --color-accent: #f59e0b;
-  --color-secondary: #6b7280;  
-  --font-family-display: Georgia, serif;
+.admin-layout {
+  @theme {
+    --color-primary: #1f2937;
+    --color-accent: #f59e0b;
+    --color-secondary: #6b7280;
+    --font-family-display: Georgia, serif;
+  }
 }
