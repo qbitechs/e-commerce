@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: localhost
+  host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -16,16 +16,24 @@ test:
 production:
   primary:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_production
   cache:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_cache_production
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_queue_production
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
     database: e_commerce_cable_production
     migrations_paths: db/cable_migrate

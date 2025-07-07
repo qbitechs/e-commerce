@@ -1,4 +1,4 @@
 class Current < ActiveSupport::CurrentAttributes
-  attribute :session
-  delegate :admin_user, to: :session, allow_nil: true
+  attribute :session, :store
+  delegate :user, to: :session, allow_nil: true
 end

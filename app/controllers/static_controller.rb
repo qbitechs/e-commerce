@@ -1,6 +1,13 @@
 class StaticController < ApplicationController
-  def index
-    @pagy, @products = pagy(Product.all)
-    @categories = @products.distinct.pluck(:category)
-  end
+  def index; end
+
+  def pricing; end
+
+  def about; end
+
+  def contact; end
+
+  def privacy; end
+
+  def terms; end
 end

@@ -1,0 +1,122 @@
+    
+<div class="lg:w-1/2">
+  <!-- Subdomain Instructions -->
+  <div id="subdomain-instructions" class="bg-white rounded-2xl shadow-lg p-6 lg:p-8" data-domain-type-target="subdomainInstructions">
+    <div class="flex items-center mb-6">
+      <div class="p-3 rounded-lg bg-indigo-100 text-indigo-600 mr-4">
+        <i class="fas fa-globe text-xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900">Subdomain Setup</h2>
+    </div>
+    <div class="space-y-6">
+      <div class="flex">
+        <div class="flex-shrink-0 mt-1">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+            <span class="text-green-600 font-bold">1</span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">Choose Your Subdomain</h3>
+          <p class="mt-1 text-gray-600">Select a unique subdomain that represents your brand. This will be part of your store's URL.</p>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex-shrink-0 mt-1">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+            <span class="text-green-600 font-bold">2</span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">Instant Activation</h3>
+          <p class="mt-1 text-gray-600">Your subdomain will be active immediately after saving. No DNS configuration required.</p>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex-shrink-0 mt-1">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+            <span class="text-green-600 font-bold">3</span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">SSL Certificate</h3>
+          <p class="mt-1 text-gray-600">We automatically provision a free SSL certificate for your subdomain to ensure secure connections.</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+      <h3 class="font-medium text-gray-900 mb-2">Example URLs</h3>
+      <ul class="text-gray-600 space-y-1">
+        <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+          <span>https://<span class="font-semibold">yourstore</span>.yourapp.com</span>
+        </li>
+        <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+          <span>https://<span class="font-semibold">brand</span>.yourapp.com</span>
+        </li>
+        <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+          <span>https://<span class="font-semibold">company-name</span>.yourapp.com</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Custom Domain Instructions -->
+  <div id="custom-domain-instructions" class="bg-white rounded-2xl shadow-lg p-6 lg:p-8 mt-8 hidden" data-domain-type-target="customDomainInstructions">
+    <div class="flex items-center mb-6">
+      <div class="p-3 rounded-lg bg-purple-100 text-purple-600 mr-4">
+        <i class="fas fa-cog text-xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900">Custom Domain Setup</h2>
+    </div>
+    <div class="space-y-6">
+      <div class="flex">
+        <div class="flex-shrink-0 mt-1">
+          <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+            <span class="text-purple-600 font-bold">1</span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">Enter Your Domain</h3>
+          <p class="mt-1 text-gray-600">Provide your registered domain name. Make sure you own this domain.</p>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex-shrink-0 mt-1">
+          <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+            <span class="text-purple-600 font-bold">2</span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">Configure DNS</h3>
+          <p class="mt-1 text-gray-600">Update your DNS settings to point to our platform. We'll provide the required records.</p>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="flex-shrink-0 mt-1">
+          <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+            <span class="text-purple-600 font-bold">3</span>
+          </div>
+        </div>
+        <div class="ml-4">
+          <h3 class="text-lg font-medium text-gray-900">Verification</h3>
+          <p class="mt-1 text-gray-600">We'll automatically verify your DNS configuration and issue an SSL certificate (takes 1-24 hours).</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8">
+      <h3 class="font-medium text-gray-900 mb-3">DNS Configuration Example</h3>
+      <div class="bg-gray-800 rounded-lg p-4 text-sm font-mono text-gray-100 overflow-x-auto">
+        <div class="mb-2">
+          <span class="text-green-400"># Record Type</span> <span class="text-blue-400">Name</span> <span class="text-yellow-400">Value</span> <span class="text-purple-400">TTL</span>
+        </div>
+        <div>
+          <span class="text-gray-400">CNAME</span> <span class="text-white">www</span> <span class="text-amber-300">yourstore.yourapp.com</span> <span class="text-cyan-300">3600</span>
+        </div>
+        <div>
+          <span class="text-gray-400">A</span> <span class="text-white">@</span> <span class="text-amber-300">192.0.2.1</span> <span class="text-cyan-300">3600</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

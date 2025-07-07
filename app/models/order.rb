@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  acts_as_tenant(:store)
+
   STATUSES = %w[pending paid shipped cancelled]
 
   belongs_to :customer

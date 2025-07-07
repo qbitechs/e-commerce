@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_144214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -42,32 +52,46 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string "email_address", null: false
-    t.string "password_digest", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_admin_users_on_email_address", unique: true
-  end
-
   create_table "cart_items", force: :cascade do |t|
     t.bigint "cart_id", null: false
     t.bigint "product_id", null: false
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
     t.index ["cart_id", "product_id"], name: "index_cart_items_on_cart_id_and_product_id", unique: true
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["product_id"], name: "index_cart_items_on_product_id"
+    t.index ["store_id"], name: "index_cart_items_on_store_id"
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "customer_id"
-    t.string "session_id"
+    t.bigint "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
+    t.bigint "session_id"
     t.index ["customer_id"], name: "index_carts_on_customer_id"
     t.index ["session_id"], name: "index_carts_on_session_id"
+    t.index ["store_id"], name: "index_carts_on_store_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.bigint "store_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_id"], name: "index_categories_on_store_id"
+  end
+
+  create_table "custom_domains", force: :cascade do |t|
+    t.bigint "store_id", null: false
+    t.string "domain"
+    t.string "status"
+    t.datetime "verified_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["store_id"], name: "index_custom_domains_on_store_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -80,8 +104,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
     t.string "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
+    t.index ["store_id"], name: "index_customers_on_store_id"
   end
 
   create_table "meta_tags", force: :cascade do |t|
@@ -89,10 +115,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
     t.text "description"
     t.string "keywords"
     t.string "page"
-    t.bigint "admin_user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_meta_tags_on_admin_user_id"
+    t.index ["user_id"], name: "index_meta_tags_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -119,7 +145,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
     t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["store_id"], name: "index_orders_on_store_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -127,30 +155,65 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_101342) do
     t.text "description"
     t.decimal "price", precision: 10, scale: 2
     t.integer "stock"
-    t.string "category"
     t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "store_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["sku"], name: "index_products_on_sku", unique: true
+    t.index ["store_id"], name: "index_products_on_store_id"
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.bigint "admin_user_id", null: false
+    t.bigint "user_id", null: false
     t.string "ip_address"
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_user_id"], name: "index_sessions_on_admin_user_id"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "name"
+    t.string "subdomain"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.index ["user_id"], name: "index_stores_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "super_admin", default: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
+  add_foreign_key "cart_items", "stores"
   add_foreign_key "carts", "customers"
-  add_foreign_key "meta_tags", "admin_users"
+  add_foreign_key "carts", "sessions"
+  add_foreign_key "carts", "stores"
+  add_foreign_key "categories", "stores"
+  add_foreign_key "custom_domains", "stores"
+  add_foreign_key "customers", "stores"
+  add_foreign_key "meta_tags", "users"
+  add_foreign_key "meta_tags", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "customers"
-  add_foreign_key "sessions", "admin_users"
+  add_foreign_key "orders", "stores"
+  add_foreign_key "products", "categories"
+  add_foreign_key "products", "stores"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "stores", "users"
+  add_foreign_key "stores", "users"
 end

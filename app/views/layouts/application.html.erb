@@ -6,44 +6,25 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= display_meta_tags %>
-    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/vendor/choices.min.css">
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :static, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
   <body class="flex min-h-screen flex-col bg-gray-50">
-    <% if admin_user_signed_in? %>
-      <!-- Admin Layout with Sidebar -->
-      <%= render 'shared/admin_sidebar' %>
-      <div class="lg:ml-64 flex flex-col min-h-screen">
-        <%= render 'layouts/header' %>
-        <main class="flex-1 p-6">
-          <%= render 'shared/flash_messages' %>
-          <%= yield %>
-        </main>
-      </div>
-    <% else %>
-      <!-- Regular Layout without Sidebar -->
-      <%= render 'layouts/header' %>
-      <main class="flex-1">
-        <%= render 'shared/flash_messages' %>
-        <%= yield %>
-      </main>
-      <%= render 'layouts/footer' %>
-    <% end %>
+    <%= render 'static/header' %>
+    <main class="flex-1">
+      <%= render 'shared/flash_messages' %>
+      <%= yield %>
+    </main>
+    <%= render 'static/footer' %>
   </body>
 </html>

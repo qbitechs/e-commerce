@@ -1,5 +1,9 @@
 class Cart < ApplicationRecord
+  acts_as_tenant(:store)
+
+
   belongs_to :customer, optional: true
+
   has_many   :cart_items, dependent: :destroy
   has_many   :products, through: :cart_items
 

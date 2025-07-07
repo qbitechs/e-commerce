@@ -1,16 +1,16 @@
-class Admin::MetaTagsController < Admin::ApplicationController
+class Admin::MetaTagsController < Admin::BaseController
   before_action :set_meta_tag, only: [ :edit, :update, :destroy ]
 
   def index
-    @tags = Current.admin_user&.meta_tags.all
+    @tags = Current.user&.meta_tags.all
   end
 
   def new
-    @meta_tag = Current.admin_user&.meta_tags.new
+    @meta_tag = Current.user&.meta_tags.new
   end
 
   def create
-    @meta_tag = Current.admin_user&.meta_tags.new(meta_tag_params)
+    @meta_tag = Current.user&.meta_tags.new(meta_tag_params)
     if @meta_tag.save
       redirect_to admin_meta_tags_path, notice: "Meta tag was successfully created."
     else
@@ -36,7 +36,7 @@ class Admin::MetaTagsController < Admin::ApplicationController
 
   private
     def set_meta_tag
-      @meta_tag = Current.admin_user.meta_tags.find(params[:id])
+      @meta_tag = Current.user.meta_tags.find(params[:id])
     end
 
     def meta_tag_params

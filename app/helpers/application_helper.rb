@@ -8,4 +8,8 @@ module ApplicationHelper
       "text-gray-600 hover:text-indigo-600 transition-colors font-medium flex items-center py-1 border-b-2 border-transparent hover:border-indigo-300"
     end
   end
+
+  def impersonating_user?
+    session[:true_user_id].present?
+  end
 end

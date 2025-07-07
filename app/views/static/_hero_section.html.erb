@@ -1,49 +1,62 @@
-<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
-  <div class="absolute inset-0 bg-black/20"></div>
-  <div class="relative max-w-7xl mx-auto px-4 py-24 lg:py-32">
+<section class="pt-20 pb-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div class="space-y-8">
+      <div class="space-y-8 animate-slide-up">
         <div class="space-y-4">
-          <p class="text-accent font-medium tracking-wide uppercase">New Collection 2025</p>
-          <h1 class="text-5xl lg:text-7xl font-display font-bold leading-tight">
-            Elevate Your
-            <span class="text-accent">Style</span>
+          <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+            Launch Your
+            <span class="gradient-text">
+              Dream Store
+            </span>
+            in Seconds
           </h1>
-          <p class="text-xl text-gray-300 leading-relaxed">
-            Discover our curated collection of premium products designed for the modern lifestyle. 
-            Quality craftsmanship meets contemporary design.
+          <p class="text-xl text-gray-600 leading-relaxed animate-fade-in" style="animation-delay: 0.2s;">
+            Create a stunning online store with zero technical knowledge. From signup to selling in under 60 seconds.
           </p>
         </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <%= link_to "Explore Collection", products_path, class: "bg-accent text-black px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 transform hover:scale-105 inline-block text-center" %>          
-          <button class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-black transition duration-300">
-            Watch Story
+        <div class="flex flex-col sm:flex-row gap-4 animate-fade-in" style="animation-delay: 0.4s;">
+          <button class="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-rocket mr-2"></i>
+            Start Building Now
+          </button>
+          <button class="border-2 border-primary text-primary px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300">
+            <i class="fas fa-play mr-2"></i>
+            Watch Demo
           </button>
         </div>
-        <div class="flex items-center space-x-8 pt-4">
-          <div class="text-center">
-            <div class="text-3xl font-bold">25K+</div>
-            <div class="text-sm text-gray-400">Happy Customers</div>
+        <div class="flex items-center space-x-8 text-sm text-gray-500 animate-fade-in" style="animation-delay: 0.6s;">
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-accent mr-2"></i>
+            No Credit Card Required
           </div>
-          <div class="text-center">
-            <div class="text-3xl font-bold">500+</div>
-            <div class="text-sm text-gray-400">Premium Products</div>
-          </div>
-          <div class="text-center">
-            <div class="text-3xl font-bold">4.9</div>
-            <div class="text-sm text-gray-400">Average Rating</div>
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-accent mr-2"></i>
+            14-Day Free Trial
           </div>
         </div>
       </div>
-      <div class="relative">
-        <div class="aspect-square bg-gradient-to-br from-accent/20 to-transparent rounded-full p-8">
-          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=600&fit=crop" alt="Hero Product" class="w-full h-full object-cover rounded-full shadow-2xl">
+      <div class="relative animate-float">
+        <div class="bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl p-8 backdrop-blur-sm">
+          <div class="bg-white rounded-2xl shadow-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+              <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+              <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+            </div>
+            <div class="space-y-3">
+              <div class="h-4 bg-gradient-to-r from-primary to-secondary rounded w-3/4"></div>
+              <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="h-20 bg-gradient-to-br from-accent/20 to-accent/40 rounded-lg"></div>
+                <div class="h-20 bg-gradient-to-br from-warning/20 to-warning/40 rounded-lg"></div>
+              </div>
+              <div class="h-8 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            </div>
+          </div>
         </div>
-        <div class="absolute -bottom-6 -right-6 bg-white text-black p-6 rounded-2xl shadow-xl">
-          <div class="text-sm font-medium text-gray-600">Starting from</div>
-          <div class="text-2xl font-bold">$99</div>
-          <div class="text-sm text-accent">Free Shipping</div>
-        </div>
+        <!-- Floating elements -->
+        <div class="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-secondary to-accent rounded-full opacity-60 animate-pulse-slow"></div>
+        <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-warning to-primary rounded-full opacity-60 animate-bounce-slow"></div>
       </div>
     </div>
   </div>
