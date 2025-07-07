@@ -17,3 +17,6 @@ application.register("order_row", OrderRowController);
 
 import ChoicesController from "controllers/choices_controller";
 application.register("choices", ChoicesController);
+
+import StaticController from "controllers/static_controller";
+application.register("static", StaticController);

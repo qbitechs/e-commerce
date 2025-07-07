@@ -1,4 +1,4 @@
-class Admin::MetaTagsController < Admin::ApplicationController
+class Admin::MetaTagsController < Admin::BaseController
   before_action :set_meta_tag, only: [ :edit, :update, :destroy ]
 
   def index

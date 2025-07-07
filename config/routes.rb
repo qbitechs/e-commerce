@@ -3,25 +3,29 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Carts:
-  resource :cart, only: [ :show ] do
-    resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
-    post "checkout", on: :member
-  end
+  constraints(lambda { |req| Rails.env.development? ? req.host != "localhost" : req.host != "e-dukaan.com" }) do
+    root to: "stores#show", as: :store
 
+    scope module: "store" do
+      # Carts:
+      resource :cart, only: [ :show ] do
+        resources :items, only: [ :create, :update, :destroy ], controller: "cart_items"
+        post "checkout", on: :member
+      end
 
-  resources :products, only: [ :index, :show ]
+      resources :products, only: [ :index, :show ]
+      resources :orders, only: [ :index ]
 
-  resources :orders, only: [ :index ]
+      devise_for :customers, path: "customers", controllers: {
+        registrations: "store/customers/registrations",
+        sessions:      "store/customers/sessions",
+        passwords:     "store/customers/passwords"
+      }
 
-  devise_for :customers, path: "customers", controllers: {
-    registrations: "customers/registrations",
-    sessions:      "customers/sessions",
-    passwords:     "customers/passwords"
-  }
-
-  authenticated :customer do
-    root to: "products#index", as: :customer_root
+      authenticated :customer do
+        root to: "products#index", as: :customer_root
+      end
+    end
   end
 
   # need to be refactor
@@ -30,29 +34,18 @@ Rails.application.routes.draw do
     resources :passwords, param: :token
 
     # Super admin routes
-    constraints lambda { |request|
-      session_id = request.cookie_jar.signed[:session_id]
-      return false unless session_id
-      session = Session.find_by(id: session_id)
-      return false unless session&.user
-      session.user.super_admin?
-    } do
+    constraints AdminTypeConstraint.new(super_admin: true) do
       root to: "admin_users#index", as: :super_admin_root
     end
 
     # Non-super admin routes
-    constraints lambda { |request|
-      session_id = request.cookie_jar.signed[:session_id]
-      return false unless session_id
-      session = Session.find_by(id: session_id)
-      return false unless session&.user
-      !session.user.super_admin?
-    } do
+    constraints AdminTypeConstraint.new(super_admin: false) do
       root to: "products#index"
       resources :products
       resources :orders, only: [ :index ]
       resources :customers, only: [ :index ]
-      resource :domain_settings, only: [ :show, :update ]
+      resource :domain_settings, only: [ :show, :edit, :update ]
+      resource :settings, only: [ :edit, :update ]
       resources :meta_tags
     end
 
@@ -67,4 +60,9 @@ Rails.application.routes.draw do
   end
 
   root to: "static#index"
+  get "/pricing", to: "static#pricing"
+  get "/about", to: "static#about"
+  get "/contact", to: "static#contact"
+  get "/privacy-policy", to: "static#privacy"
+  get "/terms-of-service", to: "static#terms"
 end

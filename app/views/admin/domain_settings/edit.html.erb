@@ -1,59 +1,75 @@
-<h1 class="text-2xl font-bold mb-4">Edit Domain Settings</h1>
-<%= form_with model: [:admin, @store], url: admin_domain_settings_path, method: :patch, local: true do |form| %>
-  <div class="mb-6">
-    <label class="block text-sm font-medium text-gray-700 mb-2">Choose Domain Type</label>
-    <div class="flex items-center space-x-6">
-      <label class="inline-flex items-center">
-        <%= form.radio_button :domain_type, 'subdomain', checked: @store.custom_domain&.domain.blank? %>
-        <span class="ml-2">Use Subdomain</span>
-      </label>
-      <label class="inline-flex items-center">
-        <%= form.radio_button :domain_type, 'custom', checked: @store.custom_domain&.domain.present? %>
-        <span class="ml-2">Use Custom Domain</span>
-      </label>
+<%= form_with model: @store, url: admin_domain_settings_path, method: :patch, local: true do |f| %>
+  <div data-controller="domain-type" class="flex flex-col lg:flex-row gap-8">
+    <!-- Form Section -->
+    <div class="lg:w-1/2 bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Edit Domain Settings</h1>
+      <p class="text-gray-600 mb-8">Configure your store's domain preferences</p>
+      <!-- Domain Type Selection -->
+      <div class="mb-8">
+        <label class="block text-lg font-medium text-gray-900 mb-4">Choose Domain Type</label>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <label class="flex-1">
+            <%= f.radio_button :domain_type, "subdomain", checked: @store.custom_domain.blank?, class: "hidden peer", data: { domain_type_target: "domainType", action: "change->domain-type#updateFormDisplay" } %>
+            <div class="p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/30 hover:border-gray-300">
+              <div class="flex items-center">
+                <span class="font-medium text-gray-900">Subdomain</span>
+              </div>
+              <p class="text-gray-600 mt-2 text-sm">Use a subdomain of our platform</p>
+            </div>
+          </label>
+          <label class="flex-1">
+            <%= f.radio_button :domain_type, "custom", checked: @store.custom_domain.present?, class: "hidden peer", data: { domain_type_target: "domainType", action: "change->domain-type#updateFormDisplay" } %>
+            <div class="p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/30 hover:border-gray-300">
+              <div class="flex items-center">
+                <span class="font-medium text-gray-900">Custom Domain</span>
+              </div>
+              <p class="text-gray-600 mt-2 text-sm">Use your own custom domain</p>
+            </div>
+          </label>
+        </div>
+      </div>
+      <!-- Subdomain Fields -->
+      <div id="subdomain-fields" class="mb-8" data-domain-type-target="subdomainFields">
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-900 mb-2">Subdomain</label>
+          <div class="relative flex">
+            <%= f.text_field :subdomain, class: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary", placeholder: "yourstore" %>
+            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">.yourapp.com</span>
+          </div>
+          <p class="mt-2 text-sm text-gray-500">Letters, numbers and hyphens only. Minimum 4 characters.</p>
+        </div>
+      </div>
+      <!-- Custom Domain Fields -->
+      <div id="custom-domain-fields" class="mb-8" data-domain-type-target="customDomainFields">
+        <%= f.fields_for :custom_domain, @store.custom_domain || @store.build_custom_domain do |cd| %>
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-900 mb-2">Custom Domain</label>
+            <%= cd.text_field :domain, class: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary", placeholder: "yourdomain.com" %>
+            <p class="mt-2 text-sm text-gray-500">Enter your domain without http:// or https://</p>
+          </div>
+        <% end %>
+        <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <div class="flex">
+            <div class="flex-shrink-0 mt-0.5">
+              <i class="fas fa-info-circle text-blue-500"></i>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-blue-800">DNS Configuration Required</h3>
+              <div class="mt-2 text-sm text-blue-700">
+                <p>After saving, you'll need to update your DNS settings to point to:</p>
+                <p class="mt-1 font-mono text-sm">123.45.67.89 or store.yourplatform.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-3">
+        <%= f.submit "Save Settings", class: "px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 shadow-sm" %>
+        <%= link_to "Cancel", admin_domain_settings_path, class: "px-6 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 shadow-sm" %>
+      </div>
     </div>
-  </div>
-
-  <div id="subdomain-fields" class="mb-4" style="<%= @store.custom_domain&.domain.present? ? 'display:none;' : '' %>">
-    <%= form.label :subdomain, 'Subdomain', class: 'block font-medium' %>
-    <div class="flex items-center">
-      <%= form.text_field :subdomain, class: 'form-input mt-1 block w-full', placeholder: 'yourstore' %>
-      <span class="ml-2 text-gray-500">.yourapp.com</span>
-    </div>
-  </div>
-
-  <div id="custom-domain-fields" class="mb-4" style="<%= @store.custom_domain&.domain.present? ? '' : 'display:none;' %>">
-    <%= form.fields_for :custom_domain, @store.custom_domain || @store.build_custom_domain do |cd_form| %>
-      <%= cd_form.label :domain, 'Custom Domain', class: 'block font-medium' %>
-      <%= cd_form.text_field :domain, class: 'form-input mt-1 block w-full', placeholder: 'yourdomain.com' %>
-      <%= cd_form.label :status, 'Status', class: 'block font-medium mt-2' %>
-      <%= cd_form.text_field :status, class: 'form-input mt-1 block w-full' %>
-      <%= cd_form.label :verified_at, 'Verified At', class: 'block font-medium mt-2' %>
-      <%= cd_form.datetime_select :verified_at, class: 'form-input mt-1 block w-full' %>
-    <% end %>
-  </div>
-
-  <div>
-    <%= form.submit 'Save Settings', class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', admin_domain_settings_path, class: 'btn btn-secondary ml-2' %>
+    <!-- Instructions Section -->
+    <%= render "instruction" %>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const subdomainFields = document.getElementById('subdomain-fields');
-    const customDomainFields = document.getElementById('custom-domain-fields');
-    const radios = document.querySelectorAll('input[name="store[domain_type]"]');
-    radios.forEach(radio => {
-      radio.addEventListener('change', function() {
-        if (this.value === 'subdomain') {
-          subdomainFields.style.display = '';
-          customDomainFields.style.display = 'none';
-        } else {
-          subdomainFields.style.display = 'none';
-          customDomainFields.style.display = '';
-        }
-      });
-    });
-  });
-</script>

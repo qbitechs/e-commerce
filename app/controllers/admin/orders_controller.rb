@@ -1,6 +1,4 @@
-class Admin::OrdersController < Admin::ApplicationController
-  before_action :prevent_super_admin_direct_access
-
+class Admin::OrdersController < Admin::BaseController
   def index
     @q = Order.ransack(params[:q])
 
