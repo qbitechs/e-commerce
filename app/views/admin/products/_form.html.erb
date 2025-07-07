@@ -46,12 +46,6 @@
             <%= image_tag @product.image, class: "h-16 w-16 object-cover rounded-md border" %>
             <div class="ml-3">
               <span class="text-sm text-gray-600">Current image</span>
-              <div class="mt-1">
-                <%= form.label :remove_image, class: "inline-flex items-center text-sm text-red-600" do %>
-                  <%= form.check_box :remove_image, class: "h-4 w-4 text-red-600 border-gray-300 rounded" %>
-                  <span class="ml-2">Remove image</span>
-                <% end %>
-              </div>
             </div>
           </div>
         <% end %>

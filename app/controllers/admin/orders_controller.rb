@@ -1,4 +1,4 @@
-class Admin::OrdersController < Admin::ApplicationController
+class Admin::OrdersController < Admin::BaseController
   def index
     @q = Order.ransack(params[:q])
 
