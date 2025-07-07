@@ -8,7 +8,9 @@ class Product < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_many :orders, through: :order_items
 
-  validates :name, :price, :stock, :sku, presence: true
+  accepts_nested_attributes_for :category
+
+  validates :name, :price, :stock, :sku, :category, presence: true
 
   def validate_cart_quantity(quantity)
     return "Currently! #{name} is out of stock." if stock == 0

@@ -1,8 +1,13 @@
 class Store < ApplicationRecord
-  belongs_to :admin_user
+  belongs_to :user
+
+  has_rich_text :description
 
   has_one :custom_domain, dependent: :destroy
+  has_one_attached :logo
+  has_one_attached :hero_image
 
+  has_many :categories, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :customers, dependent: :destroy

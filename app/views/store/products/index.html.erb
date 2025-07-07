@@ -1,0 +1,31 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <%# Breadcrumbs %>
+  <%= render "shared/breadcrumbs", current_page: "All Products", pre: [ "Product" ] %>
+
+  <%# Header with Title, Sorting, and Add Button %>
+  <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 mb-8 flex flex-wrap items-center justify-between gap-4">
+    <h1 class="text-2xl font-bold text-gray-900">All Products</h1>
+    
+    <div class="flex items-center gap-4">
+      <div class="flex items-center">
+        <span class="mr-2 text-gray-600">Sort by:</span>
+        <select class="border border-gray-200 rounded-lg p-2 text-gray-600 focus:ring-indigo-500 focus:border-indigo-500">
+          <option>Featured</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Avg. Customer Review</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <%# Products Grid %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <% @products.each do |product| %>
+      <%= render "store/products/card", product: product %>
+    <% end %>
+  </div>
+
+  <%# Pagination %>
+  <%= render "shared/pagination", pagy: @pagy %>
+</div>

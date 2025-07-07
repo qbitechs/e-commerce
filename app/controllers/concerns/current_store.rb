@@ -8,7 +8,7 @@ module CurrentStore
   private
 
   def set_current_store
-    store = store_by_host || current_user_store || store_by_session
+    store = store_by_host || store_by_session || current_user_store
 
     if store
       ActsAsTenant.current_tenant = store
@@ -39,9 +39,9 @@ module CurrentStore
   end
 
   def current_user_store
-    return nil unless Current.session&.admin_user
+    return nil unless Current.session&.user
 
-    Current.session.admin_user.stores.first
+    Current.session.user.stores.first
   end
 
   def store_by_session
