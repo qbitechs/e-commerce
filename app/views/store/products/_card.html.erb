@@ -34,9 +34,9 @@
     <!-- Price -->
     <div class="flex items-baseline justify-between mb-4">
       <div>
-        <span class="text-xl font-bold text-gray-900"><%= number_to_currency(product.price, unit: "Rs. ", precision: 0) %></span>
+        <span class="text-xl font-bold text-gray-900"><%= number_to_currency(product.price) %></span>
         <% if rand(1..3) == 1 %>
-          <span class="text-sm text-gray-500 line-through ml-2"><%= number_to_currency(product.price + 20, unit: "Rs. ", precision: 0) %></span>
+          <span class="text-sm text-gray-500 line-through ml-2"><%= number_to_currency(product.price + 20) %></span>
         <% end %>
       </div>
       <% if rand(1..3) == 1 %>
