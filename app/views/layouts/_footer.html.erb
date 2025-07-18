@@ -16,8 +16,12 @@
           <h3 class="text-2xl font-display font-bold"><%= Current.store&.name || "Luxora" %></h3>
         </div>
         <p class="text-gray-400 mb-6 max-w-md">
-          <%= Current.store&.name || "Luxora" %> is your destination for premium lifestyle products. We curate the finest selection 
-          of items to elevate your everyday experiences.
+          <% if Current.store&.footer_tag_line %>
+            <%= Current.store.footer_tag_line %>
+          <% else %>
+            Luxora is your destination for premium lifestyle products. We curate the finest selection 
+            of items to elevate your everyday experiences.
+          <% end %>
         </p>
         <div class="flex space-x-4">
           <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent hover:text-black transition duration-300">
