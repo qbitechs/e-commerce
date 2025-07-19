@@ -1,18 +1,27 @@
-    
 <footer class="bg-gray-900 text-white py-16">
   <div class="max-w-7xl mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
       <!-- Company Info -->
       <div class="lg:col-span-2">
         <div class="flex items-center mb-6">
-          <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center mr-3">
-            <i class="fas fa-gem text-black"></i>
-          </div>
-          <h3 class="text-2xl font-display font-bold">Luxora</h3>
+          <% if Current.store&.logo&.attached? %>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3">
+              <img src="<%= url_for(Current.store.logo) %>" alt="Store Logo" class="w-full h-full object-cover rounded-full">
+            </div>
+          <% else %>
+            <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-gem text-black"></i>
+            </div>
+          <% end %>
+          <h3 class="text-2xl font-display font-bold"><%= Current.store&.name || "Luxora" %></h3>
         </div>
         <p class="text-gray-400 mb-6 max-w-md">
-          Luxora is your destination for premium lifestyle products. We curate the finest selection 
-          of items to elevate your everyday experiences.
+          <% if Current.store&.footer_tag_line %>
+            <%= Current.store.footer_tag_line %>
+          <% else %>
+            Luxora is your destination for premium lifestyle products. We curate the finest selection 
+            of items to elevate your everyday experiences.
+          <% end %>
         </p>
         <div class="flex space-x-4">
           <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent hover:text-black transition duration-300">
@@ -54,7 +63,7 @@
     </div>
     <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
       <p class="text-gray-400 mb-4 md:mb-0">
-        &copy; 2024 Luxora. All rights reserved.
+        &copy; 2025 <%= Current.store&.name || "Luxora" %>. All rights reserved.
       </p>
       <div class="flex space-x-6">
         <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
