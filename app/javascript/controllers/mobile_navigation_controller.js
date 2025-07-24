@@ -2,11 +2,32 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["icon"]
 
   toggle() {
     document.getElementById("mobile-menu").classList.toggle("hidden");
-    this.iconTarget.classList.toggle('fa-bars')
-    this.iconTarget.classList.toggle('fa-times')  
+    this._toggleHamburgerIcon();
+  }
+
+  toggleSidebar() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+
+    this._toggleHamburgerIcon();
+  }
+
+  toggleDropdown(){
+    const accountDropdown = document.getElementById('account-dropdown');
+
+    accountDropdown.classList.toggle('hidden');
+  }
+
+  _toggleHamburgerIcon(){
+    const icon = document.getElementById('icon')
+
+    icon.classList.toggle('fa-bars')
+    icon.classList.toggle('fa-times') 
   }
 }
