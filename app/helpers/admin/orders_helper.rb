@@ -27,4 +27,19 @@ module Admin::OrdersHelper
       }
     ]
   end
+
+  def order_status_classes(status)
+    case status.to_s.downcase
+    when "completed"
+      "bg-green-100 text-green-700"
+    when "processing"
+      "bg-blue-100 text-blue-700"
+    when "pending"
+      "bg-yellow-100 text-yellow-700"
+    when "cancelled"
+      "bg-red-100 text-red-700"
+    else
+      "bg-gray-100 text-gray-700"
+    end
+  end
 end

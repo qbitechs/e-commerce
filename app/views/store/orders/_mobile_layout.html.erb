@@ -1,10 +1,21 @@
-    
 <div class="bg-white divide-y divide-gray-100" data-controller="order-row">
   <% orders.each do |order| %>
-    <div class="flex justify-between items-center p-4 cursor-pointer" data-action="click->order-row#toggle" data-order-row-target="row" data-order-id="<%= order.id %>">
-      <div>
-        <div class="font-bold text-gray-900 tracking-wide">ORD-<%= order.id %></div>
-        <div class="text-xs text-gray-500 mt-1"><%= order.created_at.strftime("%b %e, %Y") %></div>
+    <div class="flex justify-between items-center p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:shadow-sm transition-all cursor-pointer" data-action="click->order-row#toggle" data-order-row-target="row" data-order-id="<%= order.id %>">
+      <div class="flex-1">
+        <div class="font-semibold text-gray-900 text-base mb-1">
+          ORD-<%= order.id %>
+        </div>
+        <div class="text-sm text-gray-500">
+          <%= order.created_at.strftime("%b %e, %Y") %>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="px-3 py-1.5 rounded-full text-xs font-medium <%= order_status_classes(order.status) %>">
+          <%= order.status.titleize %>
+        </div>
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
       </div>
     </div>
     <!-- Collapsible Details -->
@@ -42,13 +53,6 @@
           <h3 class="text-sm font-semibold text-gray-700 mb-1">SHIP TO</h3>
           <div class="text-sm text-gray-900"><%= order.shipping_address %></div>
           <div class="text-sm text-gray-600"><%= "#{order.shipping_city}, #{order.shipping_country} #{order.shipping_zip_code}" %></div>
-        </div>
-        <div class="flex justify-between items-center pt-2">
-          <h3 class="text-sm font-semibold text-gray-700 mb-1">STATUS</h3>
-          <div class="px-2.5 py-1 rounded-full text-xs font-medium
-            <%= order.status == 'completed' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' %>">
-            <%= order.status.titleize %>
-          </div>
         </div>
       </div>
     </div>
