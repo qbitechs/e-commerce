@@ -1,44 +1,57 @@
-<!-- app/views/shared/_admin_sidebar.html.erb -->
 <% unless Current.user&.super_admin? %>
-  <div class="w-64 bg-white shadow-md fixed left-0 top-0 h-full z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out" id="admin-sidebar">
-    <div class="p-5 border-b">
+  <div class="fixed inset-0 z-30 lg:hidden hidden" id="sidebar-overlay" data-controller="mobile-navigation" data-action="click->mobile-navigation#toggleSidebar" style="background-color: black; opacity: 0.5;"></div>
+  
+  <!-- Sidebar -->
+  <div class="w-64 bg-white shadow-lg fixed left-0 top-0 h-full z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out" id="admin-sidebar">
+    <div class="p-5 border-b border-gray-200 flex items-center justify-between">
       <h1 class="text-xl font-bold text-indigo-600">Admin Panel</h1>
     </div>
-    <nav class="mt-5">
-      <%= link_to admin_products_path,
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_products_path)} hover:bg-gray-100" do %>
-        <i class="fas fa-box mr-3"></i> Products
-      <% end %>
-      <%= link_to admin_orders_path,
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_orders_path)} hover:bg-gray-100" do %>
-        <i class="fas fa-shopping-cart mr-3"></i> Orders
-      <% end %>
-      <%= link_to admin_customers_path,
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_customers_path)} hover:bg-gray-100" do %>
-        <i class="fas fa-users mr-3"></i> Customers
-      <% end %>
-      <%= link_to admin_domain_settings_path,
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_domain_settings_path)} hover:bg-gray-100" do %>
-        <i class="fas fa-cog mr-3"></i> Domain Settings
-      <% end %>
-      <%= link_to admin_meta_tags_path,
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(admin_meta_tags_path)} hover:bg-gray-100" do %>
-        <i class="fas fa-tag mr-3"></i> Meta Tag
-      <% end %>
-      <%= link_to "#",
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?("#")} hover:bg-gray-100" do %>
-      <i class="fas fa-chart-bar mr-3"></i> Analytics
-    <% end %>
-    <%= link_to edit_admin_settings_path,
-        class: "block py-3 px-6 #{'bg-indigo-50 text-indigo-700 font-medium' if current_page?(edit_admin_settings_path)} hover:bg-gray-100" do %>
-      <i class="fas fa-cog mr-3"></i> Settings
-    <% end %>
-  </nav>
-</div>
-<!-- Mobile overlay -->
-<div class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden" id="sidebar-overlay"></div>
-<!-- Mobile toggle button -->
-<button class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-md shadow-md" id="sidebar-toggle">
-  <i class="fas fa-bars text-gray-600"></i>
-</button>
+    
+    <!-- Navigation -->
+    <nav class="mt-2 overflow-y-auto h-full pb-20">
+      <div class="px-3 space-y-1">
+        <%= link_to admin_products_path,
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors #{'bg-indigo-100 text-indigo-700' if current_page?(admin_products_path)} #{'text-gray-700 hover:bg-gray-100' unless current_page?(admin_products_path)}" do %>
+          <i class="fas fa-box mr-3 text-base"></i>
+          <span>Products</span>
+        <% end %>
+        
+        <%= link_to admin_orders_path,
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors #{'bg-indigo-100 text-indigo-700' if current_page?(admin_orders_path)} #{'text-gray-700 hover:bg-gray-100' unless current_page?(admin_orders_path)}" do %>
+          <i class="fas fa-shopping-cart mr-3 text-base"></i>
+          <span>Orders</span>
+        <% end %>
+        
+        <%= link_to admin_customers_path,
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors #{'bg-indigo-100 text-indigo-700' if current_page?(admin_customers_path)} #{'text-gray-700 hover:bg-gray-100' unless current_page?(admin_customers_path)}" do %>
+          <i class="fas fa-users mr-3 text-base"></i>
+          <span>Customers</span>
+        <% end %>
+        
+        <%= link_to admin_domain_settings_path,
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors #{'bg-indigo-100 text-indigo-700' if current_page?(admin_domain_settings_path)} #{'text-gray-700 hover:bg-gray-100' unless current_page?(admin_domain_settings_path)}" do %>
+          <i class="fas fa-globe mr-3 text-base"></i>
+          <span>Domain Settings</span>
+        <% end %>
+        
+        <%= link_to admin_meta_tags_path,
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors #{'bg-indigo-100 text-indigo-700' if current_page?(admin_meta_tags_path)} #{'text-gray-700 hover:bg-gray-100' unless current_page?(admin_meta_tags_path)}" do %>
+          <i class="fas fa-tag mr-3 text-base"></i>
+          <span>Meta Tags</span>
+        <% end %>
+        
+        <%= link_to "#",
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors text-gray-700 hover:bg-gray-100" do %>
+          <i class="fas fa-chart-bar mr-3 text-base"></i>
+          <span>Analytics</span>
+        <% end %>
+        
+        <%= link_to edit_admin_settings_path,
+          class: "flex items-center py-3 px-3 rounded-lg text-sm font-medium transition-colors #{'bg-indigo-100 text-indigo-700' if current_page?(edit_admin_settings_path)} #{'text-gray-700 hover:bg-gray-100' unless current_page?(edit_admin_settings_path)}" do %>
+          <i class="fas fa-cog mr-3 text-base"></i>
+          <span>Settings</span>
+        <% end %>
+      </div>
+    </nav>
+  </div>
 <% end %>
