@@ -23,11 +23,31 @@
         </button>
       </div>
       <!-- Mobile menu button -->
-      <div class="md:hidden">
+      <div class="md:hidden" data-controller="mobile-navigation" data-action="click->mobile-navigation#toggle">
         <button class="text-gray-700 hover:text-primary">
-          <i class="fas fa-bars text-xl"></i>
+          <i class="fas fa-bars text-lg" id="icon"></i>
         </button>
       </div>
     </div>
+    <div class="hidden md:hidden border-t border-gray-100 pt-4 mt-4" id="mobile-menu">
+      <nav class="space-y-1">
+        <%= link_to root_path, class: "flex items-center py-3 px-3 text-gray-700 hover:text-primary hover:bg-white rounded-md font-medium transition-all duration-300 group border-b border-gray-200 last:border-b-0" do %>
+          <i class="fas fa-star w-5 h-5 mr-3 text-gray-400 group-hover:text-primary transition-colors duration-300"></i>
+          <span>Features</span>
+        <% end %>
+        <%= link_to pricing_path, class: "flex items-center py-3 px-3 text-gray-700 hover:text-primary hover:bg-white rounded-md font-medium transition-all duration-300 group border-b border-gray-200 last:border-b-0" do %>
+          <i class="fas fa-tag w-5 h-5 mr-3 text-gray-400 group-hover:text-primary transition-colors duration-300"></i>
+          <span>Pricing</span>
+        <% end %>
+        <%= link_to about_path, class: "flex items-center py-3 px-3 text-gray-700 hover:text-primary hover:bg-white rounded-md font-medium transition-all duration-300 group border-b border-gray-200 last:border-b-0" do %>
+          <i class="fas fa-info-circle w-5 h-5 mr-3 text-gray-400 group-hover:text-primary transition-colors duration-300"></i>
+          <span>About</span>
+        <% end %>
+        <%= link_to contact_path, class: "flex items-center py-3 px-3 text-gray-700 hover:text-primary hover:bg-white rounded-md font-medium transition-all duration-300 group border-b border-gray-200 last:border-b-0" do %>
+          <i class="fas fa-envelope w-5 h-5 mr-3 text-gray-400 group-hover:text-primary transition-colors duration-300"></i>
+          <span>Contact</span>
+        <% end %>
+      </nav>
+    </div>
   </div>
-</nav> 
+</nav>
